@@ -16,7 +16,7 @@ public class InfoUser implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String username;
 	private String password;
 	private Boolean gender;
@@ -28,9 +28,9 @@ public class InfoUser implements java.io.Serializable {
 	private String nickname;
 	private String name;
 	private Date birthdate;
-	private Integer questionid1;
+	private Long questionid1;
 	private String answer1;
-	private Integer questionid2;
+	private Long questionid2;
 	private String answer2;
 	private String lastloginip;
 	private Timestamp lastlogindate;
@@ -53,7 +53,7 @@ public class InfoUser implements java.io.Serializable {
 	/** full constructor */
 	public InfoUser(String username, String password, Boolean gender, String signature, String headpic,
 			Boolean iseffective, String phone, String email, String nickname, String name, Date birthdate,
-			Integer questionid1, String answer1, Integer questionid2, String answer2, String lastloginip,
+			Long questionid1, String answer1, Long questionid2, String answer2, String lastloginip,
 			Timestamp lastlogindate, Timestamp createdate, Timestamp updatedate) {
 		this.username = username;
 		this.password = password;
@@ -83,11 +83,11 @@ public class InfoUser implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -204,11 +204,11 @@ public class InfoUser implements java.io.Serializable {
 
 	@Column(name = "questionid1")
 
-	public Integer getQuestionid1() {
+	public Long getQuestionid1() {
 		return this.questionid1;
 	}
 
-	public void setQuestionid1(Integer questionid1) {
+	public void setQuestionid1(Long questionid1) {
 		this.questionid1 = questionid1;
 	}
 
@@ -224,11 +224,11 @@ public class InfoUser implements java.io.Serializable {
 
 	@Column(name = "questionid2")
 
-	public Integer getQuestionid2() {
+	public Long getQuestionid2() {
 		return this.questionid2;
 	}
 
-	public void setQuestionid2(Integer questionid2) {
+	public void setQuestionid2(Long questionid2) {
 		this.questionid2 = questionid2;
 	}
 

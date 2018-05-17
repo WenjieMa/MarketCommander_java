@@ -15,10 +15,9 @@ public class HomeColumnsLevel1 implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String name;
 	private String headname;
-	private Integer index;
 	private Timestamp createdate;
 
 	// Constructors
@@ -28,10 +27,9 @@ public class HomeColumnsLevel1 implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public HomeColumnsLevel1(String name, String headname, Integer index, Timestamp createdate) {
+	public HomeColumnsLevel1(String name, String headname,Timestamp createdate) {
 		this.name = name;
 		this.headname = headname;
-		this.index = index;
 		this.createdate = createdate;
 	}
 
@@ -42,11 +40,11 @@ public class HomeColumnsLevel1 implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -68,16 +66,6 @@ public class HomeColumnsLevel1 implements java.io.Serializable {
 
 	public void setHeadname(String headname) {
 		this.headname = headname;
-	}
-
-	@Column(name = "index")
-
-	public Integer getIndex() {
-		return this.index;
-	}
-
-	public void setIndex(Integer index) {
-		this.index = index;
 	}
 
 	@Column(name = "createdate", length = 19)

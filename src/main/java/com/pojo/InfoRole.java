@@ -15,10 +15,9 @@ public class InfoRole implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String rolecode;
 	private String name;
-	private String roletree;
 	private Timestamp createdate;
 	private Timestamp updatedate;
 
@@ -29,10 +28,9 @@ public class InfoRole implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public InfoRole(String rolecode, String name, String roletree, Timestamp createdate, Timestamp updatedate) {
+	public InfoRole(String rolecode, String name, Timestamp createdate, Timestamp updatedate) {
 		this.rolecode = rolecode;
 		this.name = name;
-		this.roletree = roletree;
 		this.createdate = createdate;
 		this.updatedate = updatedate;
 	}
@@ -44,11 +42,11 @@ public class InfoRole implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -70,16 +68,6 @@ public class InfoRole implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Column(name = "roletree")
-
-	public String getRoletree() {
-		return this.roletree;
-	}
-
-	public void setRoletree(String roletree) {
-		this.roletree = roletree;
 	}
 
 	@Column(name = "createdate", length = 19)

@@ -15,13 +15,13 @@ public class OrderSmall implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer sumid;
-	private Integer itemid;
-	private Integer quantity;
-	private Integer itemstar;
-	private Integer commentid;
-	private Integer addcommentid;
+	private Long id;
+	private Long sumid;
+	private Long itemid;
+	private Long quantity;
+	private Long itemstar;
+	private Long commentid;
+	private Long addcommentid;
 	private Timestamp createdate;
 
 	// Constructors
@@ -31,14 +31,14 @@ public class OrderSmall implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public OrderSmall(Integer sumid, Integer itemid) {
+	public OrderSmall(Long sumid, Long itemid) {
 		this.sumid = sumid;
 		this.itemid = itemid;
 	}
 
 	/** full constructor */
-	public OrderSmall(Integer sumid, Integer itemid, Integer quantity, Integer itemstar, Integer commentid,
-			Integer addcommentid, Timestamp createdate) {
+	public OrderSmall(Long sumid, Long itemid, Long quantity, Long itemstar, Long commentid,
+			Long addcommentid, Timestamp createdate) {
 		this.sumid = sumid;
 		this.itemid = itemid;
 		this.quantity = quantity;
@@ -55,71 +55,71 @@ public class OrderSmall implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "sumid", nullable = false)
 
-	public Integer getSumid() {
+	public Long getSumid() {
 		return this.sumid;
 	}
 
-	public void setSumid(Integer sumid) {
+	public void setSumid(Long sumid) {
 		this.sumid = sumid;
 	}
 
 	@Column(name = "itemid", nullable = false)
 
-	public Integer getItemid() {
+	public Long getItemid() {
 		return this.itemid;
 	}
 
-	public void setItemid(Integer itemid) {
+	public void setItemid(Long itemid) {
 		this.itemid = itemid;
 	}
 
 	@Column(name = "quantity")
 
-	public Integer getQuantity() {
+	public Long getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
 	@Column(name = "itemstar")
 
-	public Integer getItemstar() {
+	public Long getItemstar() {
 		return this.itemstar;
 	}
 
-	public void setItemstar(Integer itemstar) {
+	public void setItemstar(Long itemstar) {
 		this.itemstar = itemstar;
 	}
 
 	@Column(name = "commentid")
 
-	public Integer getCommentid() {
+	public Long getCommentid() {
 		return this.commentid;
 	}
 
-	public void setCommentid(Integer commentid) {
+	public void setCommentid(Long commentid) {
 		this.commentid = commentid;
 	}
 
 	@Column(name = "addcommentid")
 
-	public Integer getAddcommentid() {
+	public Long getAddcommentid() {
 		return this.addcommentid;
 	}
 
-	public void setAddcommentid(Integer addcommentid) {
+	public void setAddcommentid(Long addcommentid) {
 		this.addcommentid = addcommentid;
 	}
 

@@ -15,12 +15,13 @@ public class InfoItem implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer typeid;
+	private Long id;
+	private Long typeid;
 	private String name;
 	private Double price;
 	private Boolean iseffective;
-	private Integer likes;
+	private Long likes;
+	private Long store;
 	private Boolean isoff;
 	private Float discount;
 	private String textbig;
@@ -44,7 +45,7 @@ public class InfoItem implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public InfoItem(Integer typeid, String name, Double price, Boolean iseffective, Integer likes, Boolean isoff,
+	public InfoItem(Long typeid, String name, Double price, Boolean iseffective, Long likes,Long store, Boolean isoff,
 			Float discount, String textbig, String textsmall, String description, String picbig, String picsmall,
 			String picshow, Timestamp createdate, Timestamp updatedate) {
 		this.typeid = typeid;
@@ -52,6 +53,7 @@ public class InfoItem implements java.io.Serializable {
 		this.price = price;
 		this.iseffective = iseffective;
 		this.likes = likes;
+		this.store = store;
 		this.isoff = isoff;
 		this.discount = discount;
 		this.textbig = textbig;
@@ -71,21 +73,21 @@ public class InfoItem implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "typeid")
 
-	public Integer getTypeid() {
+	public Long getTypeid() {
 		return this.typeid;
 	}
 
-	public void setTypeid(Integer typeid) {
+	public void setTypeid(Long typeid) {
 		this.typeid = typeid;
 	}
 
@@ -121,12 +123,22 @@ public class InfoItem implements java.io.Serializable {
 
 	@Column(name = "likes")
 
-	public Integer getLikes() {
+	public Long getLikes() {
 		return this.likes;
 	}
 
-	public void setLikes(Integer likes) {
+	public void setLikes(Long likes) {
 		this.likes = likes;
+	}
+
+	@Column(name = "store")
+
+	public Long getStore() {
+		return this.store;
+	}
+
+	public void setStore(Long store) {
+		this.store = store;
 	}
 
 	@Column(name = "isoff")

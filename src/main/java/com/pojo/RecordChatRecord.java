@@ -15,10 +15,10 @@ public class RecordChatRecord implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer getid;
-	private Short isassistantsend;
-	private Integer sendid;
+	private Long id;
+	private Long getid;
+	private Boolean isassistantsend;
+	private Long sendid;
 	private String text;
 	private Timestamp createdate;
 
@@ -29,7 +29,7 @@ public class RecordChatRecord implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordChatRecord(Integer getid, Short isassistantsend, Integer sendid, String text, Timestamp createdate) {
+	public RecordChatRecord(Long getid, Boolean isassistantsend, Long sendid, String text, Timestamp createdate) {
 		this.getid = getid;
 		this.isassistantsend = isassistantsend;
 		this.sendid = sendid;
@@ -44,41 +44,41 @@ public class RecordChatRecord implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "getid")
 
-	public Integer getGetid() {
+	public Long getGetid() {
 		return this.getid;
 	}
 
-	public void setGetid(Integer getid) {
+	public void setGetid(Long getid) {
 		this.getid = getid;
 	}
 
 	@Column(name = "isassistantsend")
 
-	public Short getIsassistantsend() {
+	public Boolean getIsassistantsend() {
 		return this.isassistantsend;
 	}
 
-	public void setIsassistantsend(Short isassistantsend) {
+	public void setIsassistantsend(Boolean isassistantsend) {
 		this.isassistantsend = isassistantsend;
 	}
 
 	@Column(name = "sendid")
 
-	public Integer getSendid() {
+	public Long getSendid() {
 		return this.sendid;
 	}
 
-	public void setSendid(Integer sendid) {
+	public void setSendid(Long sendid) {
 		this.sendid = sendid;
 	}
 

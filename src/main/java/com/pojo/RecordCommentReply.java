@@ -15,9 +15,9 @@ public class RecordCommentReply implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer assistantid;
-	private Integer text;
+	private Long id;
+	private Long assistantid;
+	private Long text;
 	private Timestamp createdate;
 
 	// Constructors
@@ -27,7 +27,7 @@ public class RecordCommentReply implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordCommentReply(Integer assistantid, Integer text, Timestamp createdate) {
+	public RecordCommentReply(Long assistantid, Long text, Timestamp createdate) {
 		this.assistantid = assistantid;
 		this.text = text;
 		this.createdate = createdate;
@@ -40,31 +40,31 @@ public class RecordCommentReply implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "assistantid")
 
-	public Integer getAssistantid() {
+	public Long getAssistantid() {
 		return this.assistantid;
 	}
 
-	public void setAssistantid(Integer assistantid) {
+	public void setAssistantid(Long assistantid) {
 		this.assistantid = assistantid;
 	}
 
 	@Column(name = "text")
 
-	public Integer getText() {
+	public Long getText() {
 		return this.text;
 	}
 
-	public void setText(Integer text) {
+	public void setText(Long text) {
 		this.text = text;
 	}
 

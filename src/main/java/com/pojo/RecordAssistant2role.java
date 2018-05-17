@@ -15,9 +15,9 @@ public class RecordAssistant2role implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer assistantid;
-	private String rolecode;
+	private Long id;
+	private Long assistantid;
+	private Long roleid;
 	private Timestamp createdate;
 	private Timestamp updatedate;
 
@@ -28,9 +28,9 @@ public class RecordAssistant2role implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordAssistant2role(Integer assistantid, String rolecode, Timestamp createdate, Timestamp updatedate) {
+	public RecordAssistant2role(Long assistantid,Long roleid,Timestamp createdate, Timestamp updatedate) {
 		this.assistantid = assistantid;
-		this.rolecode = rolecode;
+		this.roleid = roleid;
 		this.createdate = createdate;
 		this.updatedate = updatedate;
 	}
@@ -42,32 +42,32 @@ public class RecordAssistant2role implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "assistantid")
 
-	public Integer getAssistantid() {
+	public Long getAssistantid() {
 		return this.assistantid;
 	}
 
-	public void setAssistantid(Integer assistantid) {
+	public void setAssistantid(Long assistantid) {
 		this.assistantid = assistantid;
 	}
 
-	@Column(name = "rolecode")
+	@Column(name = "roleid")
 
-	public String getRolecode() {
-		return this.rolecode;
+	public Long getRoleid() {
+		return this.roleid;
 	}
 
-	public void setRolecode(String rolecode) {
-		this.rolecode = rolecode;
+	public void setRoleid(Long roleid) {
+		this.roleid = roleid;
 	}
 
 	@Column(name = "createdate", length = 19)

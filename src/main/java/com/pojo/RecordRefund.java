@@ -15,11 +15,11 @@ public class RecordRefund implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer priorderid;
-	private Integer neworderid;
+	private Long id;
+	private Long priorderid;
+	private Long neworderid;
 	private String reason;
-	private Short ischecked;
+	private Boolean ischecked;
 	private Timestamp createdate;
 
 	// Constructors
@@ -29,7 +29,7 @@ public class RecordRefund implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordRefund(Integer priorderid, Integer neworderid, String reason, Short ischecked, Timestamp createdate) {
+	public RecordRefund(Long priorderid, Long neworderid, String reason, Boolean ischecked, Timestamp createdate) {
 		this.priorderid = priorderid;
 		this.neworderid = neworderid;
 		this.reason = reason;
@@ -44,31 +44,31 @@ public class RecordRefund implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "priorderid")
 
-	public Integer getPriorderid() {
+	public Long getPriorderid() {
 		return this.priorderid;
 	}
 
-	public void setPriorderid(Integer priorderid) {
+	public void setPriorderid(Long priorderid) {
 		this.priorderid = priorderid;
 	}
 
 	@Column(name = "neworderid")
 
-	public Integer getNeworderid() {
+	public Long getNeworderid() {
 		return this.neworderid;
 	}
 
-	public void setNeworderid(Integer neworderid) {
+	public void setNeworderid(Long neworderid) {
 		this.neworderid = neworderid;
 	}
 
@@ -84,11 +84,11 @@ public class RecordRefund implements java.io.Serializable {
 
 	@Column(name = "ischecked")
 
-	public Short getIschecked() {
+	public Boolean getIschecked() {
 		return this.ischecked;
 	}
 
-	public void setIschecked(Short ischecked) {
+	public void setIschecked(Boolean ischecked) {
 		this.ischecked = ischecked;
 	}
 

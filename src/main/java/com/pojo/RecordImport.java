@@ -15,14 +15,11 @@ public class RecordImport implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer itemid;
-	private String amount;
+	private Long id;
+	private Long itemid;
+	private Long amount;
 	private Double imprice;
 	private String supplier;
-	private Boolean ischecked;
-	private Timestamp checktime;
-	private Integer operatorid;
 	private Timestamp createdate;
 
 	// Constructors
@@ -32,15 +29,11 @@ public class RecordImport implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordImport(Integer itemid, String amount, Double imprice, String supplier, Boolean ischecked,
-			Timestamp checktime, Integer operatorid, Timestamp createdate) {
+	public RecordImport(Long itemid, Long amount, Double imprice, String supplier,Timestamp createdate) {
 		this.itemid = itemid;
 		this.amount = amount;
 		this.imprice = imprice;
 		this.supplier = supplier;
-		this.ischecked = ischecked;
-		this.checktime = checktime;
-		this.operatorid = operatorid;
 		this.createdate = createdate;
 	}
 
@@ -51,31 +44,31 @@ public class RecordImport implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "itemid")
 
-	public Integer getItemid() {
+	public Long getItemid() {
 		return this.itemid;
 	}
 
-	public void setItemid(Integer itemid) {
+	public void setItemid(Long itemid) {
 		this.itemid = itemid;
 	}
 
 	@Column(name = "amount")
 
-	public String getAmount() {
+	public Long getAmount() {
 		return this.amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
@@ -97,36 +90,6 @@ public class RecordImport implements java.io.Serializable {
 
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
-	}
-
-	@Column(name = "ischecked")
-
-	public Boolean getIschecked() {
-		return this.ischecked;
-	}
-
-	public void setIschecked(Boolean ischecked) {
-		this.ischecked = ischecked;
-	}
-
-	@Column(name = "checktime", length = 19)
-
-	public Timestamp getChecktime() {
-		return this.checktime;
-	}
-
-	public void setChecktime(Timestamp checktime) {
-		this.checktime = checktime;
-	}
-
-	@Column(name = "operatorid")
-
-	public Integer getOperatorid() {
-		return this.operatorid;
-	}
-
-	public void setOperatorid(Integer operatorid) {
-		this.operatorid = operatorid;
 	}
 
 	@Column(name = "createdate", length = 19)

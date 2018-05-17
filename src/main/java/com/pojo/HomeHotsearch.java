@@ -13,81 +13,73 @@ import java.sql.Timestamp;
 
 public class HomeHotsearch implements java.io.Serializable {
 
-	// Fields
+    // Fields
 
-	private Integer id;
-	private Long amount;
-	private Short iseffective;
-	private String name;
-	private Timestamp createdate;
+    private Long id;
+    private Boolean iseffective;
+    private String name;
+    private Timestamp createdate;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public HomeHotsearch() {
-	}
+    /**
+     * default constructor
+     */
+    public HomeHotsearch() {
+    }
 
-	/** full constructor */
-	public HomeHotsearch(Long amount, Short iseffective, String name, Timestamp createdate) {
-		this.amount = amount;
-		this.iseffective = iseffective;
-		this.name = name;
-		this.createdate = createdate;
-	}
+    /**
+     * full constructor
+     */
+    public HomeHotsearch(Boolean iseffective, String name, Timestamp createdate) {
+        this.iseffective = iseffective;
+        this.name = name;
+        this.createdate = createdate;
+    }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
+    // Property accessors
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @Id
+    @GeneratedValue(generator = "generator")
 
-	@Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Column(name = "amount")
+    @Column(name = "iseffective")
 
-	public Long getAmount() {
-		return this.amount;
-	}
+    public Boolean getIseffective() {
+        return this.iseffective;
+    }
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
+    public void setIseffective(Boolean iseffective) {
+        this.iseffective = iseffective;
+    }
 
-	@Column(name = "iseffective")
+    @Column(name = "name")
 
-	public Short getIseffective() {
-		return this.iseffective;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setIseffective(Short iseffective) {
-		this.iseffective = iseffective;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Column(name = "name")
+    @Column(name = "createdate", length = 19)
 
-	public String getName() {
-		return this.name;
-	}
+    public Timestamp getCreatedate() {
+        return this.createdate;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Column(name = "createdate", length = 19)
-
-	public Timestamp getCreatedate() {
-		return this.createdate;
-	}
-
-	public void setCreatedate(Timestamp createdate) {
-		this.createdate = createdate;
-	}
+    public void setCreatedate(Timestamp createdate) {
+        this.createdate = createdate;
+    }
 
 }

@@ -15,11 +15,9 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String text;
-	private Integer parentid;
-	private Boolean ishead;
-	private Integer index;
+	private Long parentid;
 	private Timestamp createdate;
 
 	// Constructors
@@ -29,11 +27,9 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public HomeColumnsLevel2(String text, Integer parentid, Boolean ishead, Integer index, Timestamp createdate) {
+	public HomeColumnsLevel2(String text, Long parentid,Timestamp createdate) {
 		this.text = text;
 		this.parentid = parentid;
-		this.ishead = ishead;
-		this.index = index;
 		this.createdate = createdate;
 	}
 
@@ -44,11 +40,11 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -64,32 +60,12 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 
 	@Column(name = "parentid")
 
-	public Integer getParentid() {
+	public Long getParentid() {
 		return this.parentid;
 	}
 
-	public void setParentid(Integer parentid) {
+	public void setParentid(Long parentid) {
 		this.parentid = parentid;
-	}
-
-	@Column(name = "ishead")
-
-	public Boolean getIshead() {
-		return this.ishead;
-	}
-
-	public void setIshead(Boolean ishead) {
-		this.ishead = ishead;
-	}
-
-	@Column(name = "index")
-
-	public Integer getIndex() {
-		return this.index;
-	}
-
-	public void setIndex(Integer index) {
-		this.index = index;
 	}
 
 	@Column(name = "createdate", length = 19)

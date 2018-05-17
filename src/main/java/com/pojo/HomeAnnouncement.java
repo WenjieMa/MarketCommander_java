@@ -15,9 +15,9 @@ public class HomeAnnouncement implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String text;
-	private Short iseffective;
+	private Boolean iseffective;
 	private Timestamp createdate;
 
 	// Constructors
@@ -27,7 +27,7 @@ public class HomeAnnouncement implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public HomeAnnouncement(String text, Short iseffective, Timestamp createdate) {
+	public HomeAnnouncement(String text, Boolean iseffective, Timestamp createdate) {
 		this.text = text;
 		this.iseffective = iseffective;
 		this.createdate = createdate;
@@ -40,11 +40,11 @@ public class HomeAnnouncement implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -60,11 +60,11 @@ public class HomeAnnouncement implements java.io.Serializable {
 
 	@Column(name = "iseffective")
 
-	public Short getIseffective() {
+	public Boolean getIseffective() {
 		return this.iseffective;
 	}
 
-	public void setIseffective(Short iseffective) {
+	public void setIseffective(Boolean iseffective) {
 		this.iseffective = iseffective;
 	}
 

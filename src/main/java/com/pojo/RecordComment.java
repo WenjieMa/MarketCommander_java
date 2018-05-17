@@ -15,10 +15,10 @@ public class RecordComment implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer userid;
-	private Integer replyid;
-	private Integer itemid;
+	private Long id;
+	private Long userid;
+	private Long replyid;
+	private Long itemid;
 	private String comment;
 	private Timestamp createdate;
 
@@ -29,7 +29,7 @@ public class RecordComment implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordComment(Integer userid, Integer replyid, Integer itemid, String comment, Timestamp createdate) {
+	public RecordComment(Long userid, Long replyid, Long itemid, String comment, Timestamp createdate) {
 		this.userid = userid;
 		this.replyid = replyid;
 		this.itemid = itemid;
@@ -44,41 +44,41 @@ public class RecordComment implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "userid")
 
-	public Integer getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(Integer userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
 	@Column(name = "replyid")
 
-	public Integer getReplyid() {
+	public Long getReplyid() {
 		return this.replyid;
 	}
 
-	public void setReplyid(Integer replyid) {
+	public void setReplyid(Long replyid) {
 		this.replyid = replyid;
 	}
 
 	@Column(name = "itemid")
 
-	public Integer getItemid() {
+	public Long getItemid() {
 		return this.itemid;
 	}
 
-	public void setItemid(Integer itemid) {
+	public void setItemid(Long itemid) {
 		this.itemid = itemid;
 	}
 

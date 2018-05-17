@@ -13,257 +13,203 @@ import java.sql.Timestamp;
 
 public class OrderSum implements java.io.Serializable {
 
-	// Fields
+    // Fields
 
-	private Integer id;
-	private String name;
-	private Integer userid;
-	private String type;
-	private Double totalprice;
-	private Integer provinceid;
-	private Integer cityid;
-	private Integer countyid;
-	private String address;
-	private Integer expressid;
-	private Integer deliveryid;
-	private Integer servicestar;
-	private Integer deliverystar;
-	private Integer couponid;
-	private Integer refundid;
-	private Boolean issended;
-	private Boolean isreceived;
-	private Boolean isdiscard;
-	private Timestamp createdate;
+    private Long id;
+    private String name;
+    private Long userid;
+    private String type;
+    private Double totalprice;
+    private String address;
+    private Long deliveryid;
+    private Long servicestar;
+    private Long deliverystar;
+    private Long couponid;
+    private Boolean issended;
+    private Boolean isreceived;
+    private Boolean isdiscard;
+    private Timestamp createdate;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public OrderSum() {
-	}
+    /**
+     * default constructor
+     */
+    public OrderSum() {
+    }
 
-	/** minimal constructor */
-	public OrderSum(Integer userid) {
-		this.userid = userid;
-	}
+    /**
+     * minimal constructor
+     */
+    public OrderSum(Long userid) {
+        this.userid = userid;
+    }
 
-	/** full constructor */
-	public OrderSum(String name, Integer userid, String type, Double totalprice, Integer provinceid, Integer cityid,
-			Integer countyid, String address, Integer expressid, Integer deliveryid, Integer servicestar,
-			Integer deliverystar, Integer couponid, Integer refundid, Boolean issended, Boolean isreceived,
-			Boolean isdiscard, Timestamp createdate) {
-		this.name = name;
-		this.userid = userid;
-		this.type = type;
-		this.totalprice = totalprice;
-		this.provinceid = provinceid;
-		this.cityid = cityid;
-		this.countyid = countyid;
-		this.address = address;
-		this.expressid = expressid;
-		this.deliveryid = deliveryid;
-		this.servicestar = servicestar;
-		this.deliverystar = deliverystar;
-		this.couponid = couponid;
-		this.refundid = refundid;
-		this.issended = issended;
-		this.isreceived = isreceived;
-		this.isdiscard = isdiscard;
-		this.createdate = createdate;
-	}
+    /**
+     * full constructor
+     */
+    public OrderSum(String name, Long userid, String type, Double totalprice,
+                    String address, Long deliveryid, Long servicestar,
+                    Long deliverystar, Long couponid, Boolean issended, Boolean isreceived,
+                    Boolean isdiscard, Timestamp createdate) {
+        this.name = name;
+        this.userid = userid;
+        this.type = type;
+        this.totalprice = totalprice;
+        this.address = address;
+        this.deliveryid = deliveryid;
+        this.servicestar = servicestar;
+        this.deliverystar = deliverystar;
+        this.couponid = couponid;
+        this.issended = issended;
+        this.isreceived = isreceived;
+        this.isdiscard = isdiscard;
+        this.createdate = createdate;
+    }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
+    // Property accessors
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @Id
+    @GeneratedValue(generator = "generator")
 
-	@Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Column(name = "name")
+    @Column(name = "name")
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Column(name = "userid", nullable = false)
+    @Column(name = "userid", nullable = false)
 
-	public Integer getUserid() {
-		return this.userid;
-	}
+    public Long getUserid() {
+        return this.userid;
+    }
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
-	}
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
 
-	@Column(name = "type")
+    @Column(name = "type")
 
-	public String getType() {
-		return this.type;
-	}
+    public String getType() {
+        return this.type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	@Column(name = "totalprice", precision = 10)
+    @Column(name = "totalprice", precision = 10)
 
-	public Double getTotalprice() {
-		return this.totalprice;
-	}
+    public Double getTotalprice() {
+        return this.totalprice;
+    }
 
-	public void setTotalprice(Double totalprice) {
-		this.totalprice = totalprice;
-	}
+    public void setTotalprice(Double totalprice) {
+        this.totalprice = totalprice;
+    }
 
-	@Column(name = "provinceid")
+    @Column(name = "address")
 
-	public Integer getProvinceid() {
-		return this.provinceid;
-	}
+    public String getAddress() {
+        return this.address;
+    }
 
-	public void setProvinceid(Integer provinceid) {
-		this.provinceid = provinceid;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	@Column(name = "cityid")
+    @Column(name = "deliveryid")
 
-	public Integer getCityid() {
-		return this.cityid;
-	}
+    public Long getDeliveryid() {
+        return this.deliveryid;
+    }
 
-	public void setCityid(Integer cityid) {
-		this.cityid = cityid;
-	}
+    public void setDeliveryid(Long deliveryid) {
+        this.deliveryid = deliveryid;
+    }
 
-	@Column(name = "countyid")
+    @Column(name = "servicestar")
 
-	public Integer getCountyid() {
-		return this.countyid;
-	}
+    public Long getServicestar() {
+        return this.servicestar;
+    }
 
-	public void setCountyid(Integer countyid) {
-		this.countyid = countyid;
-	}
+    public void setServicestar(Long servicestar) {
+        this.servicestar = servicestar;
+    }
 
-	@Column(name = "address")
+    @Column(name = "deliverystar")
 
-	public String getAddress() {
-		return this.address;
-	}
+    public Long getDeliverystar() {
+        return this.deliverystar;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setDeliverystar(Long deliverystar) {
+        this.deliverystar = deliverystar;
+    }
 
-	@Column(name = "expressid")
+    @Column(name = "couponid")
 
-	public Integer getExpressid() {
-		return this.expressid;
-	}
+    public Long getCouponid() {
+        return this.couponid;
+    }
 
-	public void setExpressid(Integer expressid) {
-		this.expressid = expressid;
-	}
+    public void setCouponid(Long couponid) {
+        this.couponid = couponid;
+    }
 
-	@Column(name = "deliveryid")
+    @Column(name = "issended")
 
-	public Integer getDeliveryid() {
-		return this.deliveryid;
-	}
+    public Boolean getIssended() {
+        return this.issended;
+    }
 
-	public void setDeliveryid(Integer deliveryid) {
-		this.deliveryid = deliveryid;
-	}
+    public void setIssended(Boolean issended) {
+        this.issended = issended;
+    }
 
-	@Column(name = "servicestar")
+    @Column(name = "isreceived")
 
-	public Integer getServicestar() {
-		return this.servicestar;
-	}
+    public Boolean getIsreceived() {
+        return this.isreceived;
+    }
 
-	public void setServicestar(Integer servicestar) {
-		this.servicestar = servicestar;
-	}
+    public void setIsreceived(Boolean isreceived) {
+        this.isreceived = isreceived;
+    }
 
-	@Column(name = "deliverystar")
+    @Column(name = "isdiscard")
 
-	public Integer getDeliverystar() {
-		return this.deliverystar;
-	}
+    public Boolean getIsdiscard() {
+        return this.isdiscard;
+    }
 
-	public void setDeliverystar(Integer deliverystar) {
-		this.deliverystar = deliverystar;
-	}
+    public void setIsdiscard(Boolean isdiscard) {
+        this.isdiscard = isdiscard;
+    }
 
-	@Column(name = "couponid")
+    @Column(name = "createdate", length = 19)
 
-	public Integer getCouponid() {
-		return this.couponid;
-	}
+    public Timestamp getCreatedate() {
+        return this.createdate;
+    }
 
-	public void setCouponid(Integer couponid) {
-		this.couponid = couponid;
-	}
-
-	@Column(name = "refundid")
-
-	public Integer getRefundid() {
-		return this.refundid;
-	}
-
-	public void setRefundid(Integer refundid) {
-		this.refundid = refundid;
-	}
-
-	@Column(name = "issended")
-
-	public Boolean getIssended() {
-		return this.issended;
-	}
-
-	public void setIssended(Boolean issended) {
-		this.issended = issended;
-	}
-
-	@Column(name = "isreceived")
-
-	public Boolean getIsreceived() {
-		return this.isreceived;
-	}
-
-	public void setIsreceived(Boolean isreceived) {
-		this.isreceived = isreceived;
-	}
-
-	@Column(name = "isdiscard")
-
-	public Boolean getIsdiscard() {
-		return this.isdiscard;
-	}
-
-	public void setIsdiscard(Boolean isdiscard) {
-		this.isdiscard = isdiscard;
-	}
-
-	@Column(name = "createdate", length = 19)
-
-	public Timestamp getCreatedate() {
-		return this.createdate;
-	}
-
-	public void setCreatedate(Timestamp createdate) {
-		this.createdate = createdate;
-	}
+    public void setCreatedate(Timestamp createdate) {
+        this.createdate = createdate;
+    }
 
 }

@@ -15,9 +15,9 @@ public class RecordCollection implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
-	private Integer userid;
-	private Integer itemid;
+	private Long id;
+	private Long userid;
+	private Long itemid;
 	private Timestamp createdate;
 
 	// Constructors
@@ -27,7 +27,7 @@ public class RecordCollection implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public RecordCollection(Integer userid, Integer itemid, Timestamp createdate) {
+	public RecordCollection(Long userid, Long itemid, Timestamp createdate) {
 		this.userid = userid;
 		this.itemid = itemid;
 		this.createdate = createdate;
@@ -40,31 +40,31 @@ public class RecordCollection implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@Column(name = "userid")
 
-	public Integer getUserid() {
+	public Long getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(Integer userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 
 	@Column(name = "itemid")
 
-	public Integer getItemid() {
+	public Long getItemid() {
 		return this.itemid;
 	}
 
-	public void setItemid(Integer itemid) {
+	public void setItemid(Long itemid) {
 		this.itemid = itemid;
 	}
 

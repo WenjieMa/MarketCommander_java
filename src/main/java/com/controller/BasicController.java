@@ -20,7 +20,6 @@ public class BasicController {
     private OperatorService operatorService;
 
     @ResponseBody
-    @CrossOrigin
     @RequestMapping(value = "/")
     public JSON initMethod() {
         return CommonUtils.toValue(null, true, "0");

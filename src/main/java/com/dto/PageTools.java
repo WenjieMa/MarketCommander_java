@@ -13,16 +13,31 @@ public class PageTools {
      * 获取基础分页对象
      * @param page 获取第几页
      * @param size 每页条数
-     * @param dtos 排序对象数组
      * @return
      */
     public static Pageable basicPage(Integer page, Integer size, SortDto... dtos) {
         Sort sort = SortTools.basicSort(dtos);
-        page = (page==null || page<0)?0:page;
+        page = (page==null || page<0)?0:page-1;
         size = (size==null || size<=0)?15:size;
         Pageable pageable = new PageRequest(page, size, sort);
         return pageable;
     }
+
+    /**
+     * 获取基础分页对象
+     * @param page 获取第几页
+     * @param size 每页条数
+     * @return
+     */
+    public static Pageable basicPage(Integer page, Integer size) {
+        Sort sort = SortTools.basicSort();
+        page = (page==null || page<0)?0:page-1;
+        size = (size==null || size<=0)?15:size;
+        Pageable pageable = new PageRequest(page, size, sort);
+        return pageable;
+    }
+
+
 
     /**
      * 获取基础分页对象，每页条数默认15条
@@ -31,7 +46,7 @@ public class PageTools {
      * @return
      */
     public static Pageable basicPage(Integer page) {
-        return basicPage(page, 0, new SortDto("desc", "id"));
+        return basicPage(page-1, 0, new SortDto("desc", "id"));
     }
 
     /**
@@ -41,7 +56,7 @@ public class PageTools {
      * @return
      */
     public static Pageable basicPage(Integer page, SortDto... dtos) {
-        return basicPage(page, 0, dtos);
+        return basicPage(page-1, 0, dtos);
     }
 
     /**
@@ -52,7 +67,7 @@ public class PageTools {
      * @return
      */
     public static Pageable basicPage(Integer page, Integer size, String orderField) {
-        return basicPage(page, size, new SortDto("desc", orderField));
+        return basicPage(page-1, size, new SortDto("desc", orderField));
     }
 
     /**
@@ -64,6 +79,6 @@ public class PageTools {
      * @return
      */
     public static Pageable basicPage(Integer page, String orderField) {
-        return basicPage(page, 0, new SortDto("desc", orderField));
+        return basicPage(page-1, 0, new SortDto("desc", orderField));
     }
 }

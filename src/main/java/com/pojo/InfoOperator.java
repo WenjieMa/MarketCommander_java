@@ -15,12 +15,12 @@ public class InfoOperator implements java.io.Serializable {
 
 	// Fields
 
-	private Integer id;
+	private Long id;
 	private String username;
 	private String password;
 	private String name;
 	private String phone;
-	private String gender;
+	private Boolean gender;
 	private Timestamp createdate;
 	private Timestamp updatedate;
 
@@ -31,7 +31,7 @@ public class InfoOperator implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public InfoOperator(String username, String password, String name, String phone, String gender,
+	public InfoOperator(String username, String password, String name, String phone, Boolean gender,
 			Timestamp createdate, Timestamp updatedate) {
 		this.username = username;
 		this.password = password;
@@ -49,11 +49,11 @@ public class InfoOperator implements java.io.Serializable {
 
 	@Column(name = "id", unique = true, nullable = false)
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -99,11 +99,11 @@ public class InfoOperator implements java.io.Serializable {
 
 	@Column(name = "gender")
 
-	public String getGender() {
+	public Boolean getGender() {
 		return this.gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Boolean gender) {
 		this.gender = gender;
 	}
 
