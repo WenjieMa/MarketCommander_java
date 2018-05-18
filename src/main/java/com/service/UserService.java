@@ -58,6 +58,10 @@ public class UserService {
         return iInfoUserDAO.findAll(PageTools.basicPage(pageVo.getPage(), pageVo.getSize()));
     }
 
+    public InfoUser findById(Long userid) {
+        return iInfoUserDAO.findById(userid).get();
+    }
+
     public Page<InfoUser> findByName(UserVo userVo) {
         return iInfoUserDAO.findAll(new Specification<InfoUser>() {
 

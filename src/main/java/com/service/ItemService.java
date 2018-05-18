@@ -48,6 +48,11 @@ public class ItemService {
         return iInfoItemDAO.findAll(PageTools.basicPage(itemVo.getPage(), itemVo.getSize()));
     }
 
+    public InfoItem findById(Long id) {
+        return iInfoItemDAO.findById(id).get();
+    }
+
+
     public Page<RecordImport> findAllImport(ImportVo importVo) {
         return iRecordImportDAO.findAll(PageTools.basicPage(importVo.getPage(), importVo.getSize()));
     }
