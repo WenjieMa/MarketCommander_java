@@ -18,6 +18,7 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 	private Long id;
 	private String text;
 	private Long parentid;
+	private Long typeid;
 	private Timestamp createdate;
 
 	// Constructors
@@ -56,6 +57,16 @@ public class HomeColumnsLevel2 implements java.io.Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@Column(name = "typeid")
+
+	public Long getTypeid() {
+		return this.typeid;
+	}
+
+	public void setTypeid(Long typeid) {
+		this.typeid = typeid;
 	}
 
 	@Column(name = "parentid")

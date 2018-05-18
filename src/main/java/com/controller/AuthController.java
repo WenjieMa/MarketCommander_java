@@ -7,6 +7,7 @@ import com.pojo.InfoUser;
 import com.pojo.RecordAssistant2role;
 import com.service.OperatorService;
 import com.service.RoleService;
+import com.service.UserService;
 import com.utils.common.CommonUtils;
 import com.vo.OperatorLoginVo;
 import com.vo.UsernameVo;
@@ -26,6 +27,9 @@ import java.util.List;
 public class AuthController {
     @Autowired
     private OperatorService operatorService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RoleService roleService;
@@ -68,6 +72,44 @@ public class AuthController {
         }
         try {
             operatorService.regist(infoOperator);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonUtils.toValue(null, false, "404");
+        }
+        return CommonUtils.toValue(null, true, "0");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/login")
+    public JSON userLogin(@RequestBody UsernameVo usernameVo) {
+        InfoUser infoUser = null;
+        List<InfoUser> infoUsers = null;
+        try {
+            infoUsers = userService.login(usernameVo.getUsername(), DigestUtils.md5Hex(usernameVo.getPassword().getBytes("UTF-8")));
+            if (infoUsers.size() > 0) {
+                infoUser = infoUsers.get(0);
+                return CommonUtils.toValue(infoUser, true, "0");
+            } else {
+                return CommonUtils.toValue(null, false, "404");
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return CommonUtils.toValue(null, false, "404");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/regist")
+    public JSON userRegist(@RequestBody InfoUser infoUser) {
+        System.out.println("来了");
+        try {
+            infoUser.setCreatedate(new Timestamp(System.currentTimeMillis()));
+            infoUser.setPassword(DigestUtils.md5Hex(infoUser.getPassword().getBytes("UTF-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            userService.regist(infoUser);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -143,6 +144,20 @@ public class MainPageController {
             return CommonUtils.toValue(null, false, "404");
         }
         return CommonUtils.toValue(homeColumnsLevel1s.getContent(), homeColumnsLevel1s.getTotalPages(), homeColumnsLevel1s.getTotalElements(), true, "0");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/start/findallabove")
+    public JSON findAllAbove() {
+        List<ColumnObjVo> columnObjVos = null;
+        try {
+            columnObjVos = startService.findAllAbove();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonUtils.toValue(null, false, "404");
+        }
+        return CommonUtils.toValue(columnObjVos, true, "0");
     }
 
 

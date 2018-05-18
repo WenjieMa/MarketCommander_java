@@ -44,8 +44,8 @@ public class ItemService {
 
     }
 
-    public Page<InfoItem> findAll(ItemVo itemTypeVo) {
-        return iInfoItemDAO.findAll(PageTools.basicPage(itemTypeVo.getPage(), itemTypeVo.getSize()));
+    public Page<InfoItem> findAll(ItemVo itemVo) {
+        return iInfoItemDAO.findAll(PageTools.basicPage(itemVo.getPage(), itemVo.getSize()));
     }
 
     public Page<RecordImport> findAllImport(ImportVo importVo) {
@@ -92,27 +92,33 @@ public class ItemService {
         iRecordImportDAO.save(importingVo.getRecordImport());
     }
 
-    public Page<InfoItem> findByName(ItemVo itemTypeVo) {
+    public Page<InfoItem> findByName(ItemVo itemVo) {
+        System.out.println(itemVo.getId() + "||" + itemVo.getTypeid());
         return iInfoItemDAO.findAll(new Specification<InfoItem>() {
-            int id = itemTypeVo.getId();
-            int typeid = itemTypeVo.getTypeid();
-            String name = itemTypeVo.getName();
+            int id = itemVo.getId();
+            int typeid = itemVo.getTypeid();
+            String name = itemVo.getName();
 
             public Predicate toPredicate(Root<InfoItem> root,
                                          CriteriaQuery<?> query, CriteriaBuilder cb) {
-                Path<Long> namePath = root.get("typename");
+                Path<Long> namePath = root.get("name");
                 Path<Long> idPath = root.get("id");
                 Path<Long> typeidPath = root.get("typeid");
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != name) {
-                    predicates.add(cb.equal(namePath, name));
+                if (null != name && "" != name) {
+                    predicates.add(cb.like(root.get("name").as(String.class), "%" + name + "%"));
+                }
+                if (null != typeid + "" && typeid != 0) {
                     predicates.add(cb.equal(typeidPath, typeid));
+                }
+
+                if (null != id + "" && id != 0) {
                     predicates.add(cb.equal(idPath, id));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
                 return null;
             }
 
-        }, new PageRequest(itemTypeVo.getPage() - 1, itemTypeVo.getSize()));
+        }, new PageRequest(itemVo.getPage() - 1, itemVo.getSize()));
     }
 }

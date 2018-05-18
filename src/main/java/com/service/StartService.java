@@ -7,6 +7,7 @@ import com.dto.PageTools;
 import com.pojo.HomeColumnsLevel1;
 import com.pojo.HomeColumnsLevel2;
 import com.pojo.HomeStartimages;
+import com.vo.ColumnObjVo;
 import com.vo.ColumnVo;
 import com.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,20 @@ public class StartService {
 
     @Autowired
     IHomeStartimagesDAO iHomeStartimagesDAO;
+
+    public List<ColumnObjVo> findAllAbove() {
+        List<HomeColumnsLevel1> homeColumnsLevel1s =iHomeColumnsLevel1DAO.findAll();
+        List<ColumnObjVo> columnVos = new ArrayList<ColumnObjVo>();
+        for (HomeColumnsLevel1 h1: homeColumnsLevel1s) {
+            ColumnObjVo columnVo =new ColumnObjVo();
+            columnVo.setId(h1.getId());
+            columnVo.setName(h1.getName());
+            List<HomeColumnsLevel2> h2s = iHomeColumnsLevel2DAO.findByParentid(h1.getId());
+            columnVo.setH2s(h2s);
+            columnVos.add(columnVo);
+        }
+        return columnVos;
+    }
 
     public void insertImage(HomeStartimages homeStartimages) {
         iHomeStartimagesDAO.save(homeStartimages);
@@ -92,7 +107,7 @@ public class StartService {
                                          CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path<Long> parentidPath = root.get("parentid");
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != parentid + "") {
+                if (null != parentid + "" && parentid != 0) {
                     predicates.add(cb.equal(parentidPath, parentid));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
