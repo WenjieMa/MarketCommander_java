@@ -236,6 +236,7 @@ public class OrderService {
                 orderSmallVo.setAddRecordComment(addRecordComment);
                 orderSmallVo.setRecordComment(recordComment);
                 orderSmallVo.setId(orderSmall.getId());
+                orderSmallVo.setItemid(orderSmall.getItemid());
                 orderSmallVo.setItemstar(orderSmall.getItemstar());
                 orderSmallVo.setQuantity(orderSmall.getQuantity());
                 orderSmallVo.setSumid(orderSmall.getSumid());
@@ -278,6 +279,7 @@ public class OrderService {
             orderSmallVo.setAddRecordComment(addRecordComment);
             orderSmallVo.setRecordComment(recordComment);
             orderSmallVo.setId(orderSmall.getId());
+            orderSmallVo.setItemid(orderSmall.getItemid());
             orderSmallVo.setItemstar(orderSmall.getItemstar());
             orderSmallVo.setQuantity(orderSmall.getQuantity());
             orderSmallVo.setSumid(orderSmall.getSumid());

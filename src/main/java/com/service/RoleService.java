@@ -108,20 +108,7 @@ public class RoleService {
         for (RecordAssistant2role role : recordAssistant2roles) {
             ids.add(role.getAssistantid());
         }
-        return iInfoOperatorDAO.findAll(new Specification<InfoOperator>() {
-            List<Long> idlist = ids;
-
-            public Predicate toPredicate(Root<InfoOperator> root,
-                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<Predicate>();
-                for (Object id : ids) {
-                    Path<List<Long>> idPath = root.get("id");
-                    predicates.add(cb.notEqual(idPath, id));
-                }
-                query.where(predicates.toArray(new Predicate[predicates.size()]));
-                return null;
-            }
-        }, new PageRequest(roleVo.getPage() - 1, roleVo.getSize()));
+        return iInfoOperatorDAO.findAllByIdIn(ids,PageRequest.of(roleVo.getPage()-1,roleVo.getSize()));
     }
 
 

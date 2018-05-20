@@ -13,6 +13,7 @@ public interface IRecordCollectionDAO extends JpaRepository<RecordCollection, Lo
 
     int deleteByUseridAndItemid(Long userid, Long itemid);
 
+
     List<RecordCollection> findByUserid(Long userid);
 
 }

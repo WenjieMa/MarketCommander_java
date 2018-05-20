@@ -12,6 +12,16 @@ public class OrderSmallVo implements java.io.Serializable {
     private Long id;
     private Long sumid;
     private OrderItemVo data;
+    private Long itemid;
+
+    public Long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(Long itemid) {
+        this.itemid = itemid;
+    }
+
     private Long quantity;
     private Double itemstar;
     private RecordComment recordComment;

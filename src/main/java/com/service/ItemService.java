@@ -96,8 +96,8 @@ public class ItemService {
     public Page<InfoItem> findByName(ItemVo itemVo) {
         System.out.println(itemVo.getId() + "||" + itemVo.getTypeid());
         return iInfoItemDAO.findAll(new Specification<InfoItem>() {
-            int id = itemVo.getId();
-            int typeid = itemVo.getTypeid();
+            Long id = itemVo.getId();
+            Long typeid = itemVo.getTypeid();
             String name = itemVo.getName();
 
             public Predicate toPredicate(Root<InfoItem> root,
@@ -109,11 +109,11 @@ public class ItemService {
                 if (null != name && "" != name) {
                     predicates.add(cb.like(root.get("name").as(String.class), "%" + name + "%"));
                 }
-                if (null != typeid + "" && typeid != 0) {
+                if (null != typeid && typeid != 0) {
                     predicates.add(cb.equal(typeidPath, typeid));
                 }
 
-                if (null != id + "" && id != 0) {
+                if (null != id && id != 0) {
                     predicates.add(cb.equal(idPath, id));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));

@@ -12,6 +12,8 @@ public interface IOrderSmallDAO extends JpaRepository<OrderSmall, Long> ,JpaSpec
 
     List<OrderSmall> findBySumid(Long sumid);
 
+    List<OrderSmall> findByCommentid(Long commentid);
+
     @Query(value = "select avg(r.itemstar) as star from order_small r where r.itemid=?1",nativeQuery = true)
     List<Map<String,Object>> avgByItemid(Long itemid);
 }

@@ -41,6 +41,26 @@ public class CollectionController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/findbyuseridanditemid")
+    public JSON find(@RequestBody RecordCollection recordCollection) {
+        RecordCollection record = null;
+        try {
+            record = collectionService.findByUserIdAndItemId(recordCollection);
+            if (record == null) {
+                return CommonUtils.toValue(null, true, "0");
+            } else {
+                System.out.println(recordCollection.getId() + "这是我的收藏id");
+                return CommonUtils.toValue(record, true, "0");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonUtils.toValue(null, false, "404");
+        }
+
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "/update")
     public JSON update(@RequestBody RecordCollection recordCollection) {
         try {
@@ -57,7 +77,7 @@ public class CollectionController {
     public JSON delete(@RequestBody CollectionVo collectionVo) {
         Page<InfoItem> infoItemPage = null;
         try {
-            collectionService.delete(collectionVo.getRecordCollection().getUserid(),collectionVo.getRecordCollection().getItemid());
+            collectionService.delete(collectionVo.getRecordCollection().getUserid(), collectionVo.getRecordCollection().getItemid());
             infoItemPage = collectionService.findAll(collectionVo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +85,19 @@ public class CollectionController {
         }
         return CommonUtils.toValue(infoItemPage.getContent(), infoItemPage.getTotalPages(), infoItemPage.getTotalElements(), true, "0");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/deletefromitem")
+    public JSON delete(@RequestBody RecordCollection recordCollection) {
+        try {
+            collectionService.delete(recordCollection.getUserid(), recordCollection.getItemid());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonUtils.toValue(null, false, "404");
+        }
+        return CommonUtils.toValue(null, true, "0");
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/findall")

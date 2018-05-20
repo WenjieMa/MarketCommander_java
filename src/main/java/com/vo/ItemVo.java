@@ -5,19 +5,19 @@ package com.vo;
  */
 
 public class ItemVo {
-    public int getTypeid() {
+    public Long getTypeid() {
         return typeid;
     }
 
-    public void setTypeid(int typeid) {
+    public void setTypeid(Long typeid) {
         this.typeid = typeid;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,8 +29,8 @@ public class ItemVo {
         this.name = name;
     }
 
-    private int typeid;
-    private int id;
+    private Long typeid;
+    private Long id;
     private String name;
 
     public int getPage() {

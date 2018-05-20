@@ -33,6 +33,12 @@ public class CollectionService {
         iRecordCollectionDAO.save(recordCollection);
     }
 
+    public RecordCollection findByUserIdAndItemId(RecordCollection recordCollection) {
+        List<RecordCollection> recordCollections = iRecordCollectionDAO.findByUseridAndItemid(recordCollection.getUserid(), recordCollection.getItemid());
+        return recordCollections.size() == 0 ? null : recordCollections.get(0);
+
+    }
+
     public void update(RecordCollection recordCollection) {
         iRecordCollectionDAO.save(recordCollection);
 
@@ -51,23 +57,8 @@ public class CollectionService {
         for (RecordCollection recordCollection : recordCollections) {
             ids.add(recordCollection.getItemid());
         }
-        return iInfoItemDAO.findAll(new Specification<InfoItem>() {
-            List<Long> idlist = ids;
-
-            public Predicate toPredicate(Root<InfoItem> root,
-                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<Predicate>();
-                for (Object id : ids) {
-                    Path<List<Long>> idPath = root.get("id");
-                    predicates.add(cb.or(cb.equal(idPath, id)));
-                }
-                if (ids.size() == 0) {
-                    Path<List<Long>> idPath = root.get("id");
-                    predicates.add(cb.equal(idPath, -1));
-                }
-                query.where(predicates.toArray(new Predicate[predicates.size()]));
-                return null;
-            }
-        }, new PageRequest(collectionVo.getPage() - 1, collectionVo.getSize()));
+        Page<InfoItem> infoItemPage = iInfoItemDAO.findAllByIdIn(ids, PageRequest.of(collectionVo.getPage()-1, collectionVo.getSize()));
+        System.out.println(infoItemPage.getContent().size() + "+++");
+        return infoItemPage;
     }
 }

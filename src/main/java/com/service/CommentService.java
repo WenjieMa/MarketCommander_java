@@ -1,10 +1,7 @@
 package com.service;
 
 import com.dao.JPAInterface.*;
-import com.pojo.InfoItem;
-import com.pojo.OrderSmall;
-import com.pojo.OrderSum;
-import com.pojo.RecordComment;
+import com.pojo.*;
 import com.utils.common.CommonUtils;
 import com.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +35,63 @@ public class CommentService {
     @Autowired
     IInfoItemDAO iInfoItemDAO;
 
+    @Autowired
+    IInfoUserDAO iInfoUserDAO;
+
+    @Autowired
+    IInfoOperatorDAO iInfoOperatorDAO;
+
+
+    public void reply(WholeComment wholeComment) {
+        RecordCommentReply vo = wholeComment.getRecordCommentReply();
+        vo.setCreatedate(new Timestamp(System.currentTimeMillis()));
+        RecordCommentReply recordCommentReply = iRecordCommentReplyDAO.save(vo);
+
+        RecordComment recordComment = iRecordCommentDAO.findById(wholeComment.getRecordComment().getId()).get();
+        recordComment.setReplyid(recordCommentReply.getId());
+        iRecordCommentDAO.save(recordComment);
+    }
+
+
+    public ItemCommentReplyVo findCommentVoByItemid(ItemVo itemVo) {
+        ItemCommentReplyVo itemCommentReplyVo = new ItemCommentReplyVo();
+        List<RecordComment> commentList = iRecordCommentDAO.findByItemid(Long.parseLong(itemVo.getId() + ""));
+        List<CommentReplyVo> replyVos = new ArrayList<>();
+        InfoItem infoItem = iInfoItemDAO.findById(itemVo.getId()).get();
+        for (RecordComment comment : commentList) {
+            CommentReplyVo commentReplyVo = new CommentReplyVo();
+            InfoUser infoUser = iInfoUserDAO.findById(comment.getUserid()).get();
+            InfoOperator infoOperator = null;
+            RecordCommentReply recordCommentReply = null;
+            List<OrderSmall> orderSmallss=iOrderSmallDAO.findByCommentid(comment.getId());
+            OrderSmall orderSmall=orderSmallss.size()>0?orderSmallss.get(0):null;
+            System.out.println(comment.getReplyid());
+            if (comment.getReplyid() > 0) {
+                recordCommentReply = iRecordCommentReplyDAO.findById(comment.getReplyid()).get();
+                infoOperator = iInfoOperatorDAO.findById(recordCommentReply.getAssistantid()).get();
+            }else{
+                recordCommentReply=new RecordCommentReply();
+                recordCommentReply.setText("");
+                infoOperator = new InfoOperator();
+                infoOperator.setId(-1l);
+            }
+            commentReplyVo.setRecordComment(comment);
+            commentReplyVo.setRecordCommentReply(recordCommentReply);
+            commentReplyVo.setInfoOperator(infoOperator);
+            commentReplyVo.setInfoUser(infoUser);
+            commentReplyVo.setOrderSmall(orderSmall);
+            replyVos.add(commentReplyVo);
+        }
+        itemCommentReplyVo = CommonUtils.sortCommentReply(replyVos, itemVo);
+        itemCommentReplyVo.setInfoItem(infoItem);
+        return itemCommentReplyVo;
+    }
+
     public void insert(OrderSumVo orderSumVo) {
         for (OrderSmallVo vo : orderSumVo.getOrderSmalls()) {
             RecordComment recordComment = new RecordComment();
             recordComment.setComment(vo.getRecordComment().getComment());
-            recordComment.setItemid(vo.getId());
+            recordComment.setItemid(vo.getItemid());
             recordComment.setUserid(orderSumVo.getUserid());
             recordComment.setReplyid(-1l);
             recordComment.setCreatedate(new Timestamp(System.currentTimeMillis()));

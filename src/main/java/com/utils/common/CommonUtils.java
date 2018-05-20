@@ -2,9 +2,7 @@ package com.utils.common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.vo.CommentSumVo;
-import com.vo.CommentVo;
-import com.vo.ItemCommentVo;
+import com.vo.*;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,6 +25,27 @@ public class CommonUtils {
             json.put("code", code);
         }
         return json;
+    }
+
+    public static ItemCommentReplyVo sortCommentReply(List<CommentReplyVo> vos, ItemVo itemVo) {
+        ItemCommentReplyVo itemCommentReplyVo = new ItemCommentReplyVo();
+        int page = itemVo.getPage();
+        int size = itemVo.getSize();
+
+        List<CommentReplyVo> newVos = vos.stream().sorted((o1, o2) -> {
+            if (o1.getOrderSmall().getItemstar() - o2.getOrderSmall().getItemstar() > 0) {
+                return 1;
+            } else if (o1.getOrderSmall().getItemstar() - o2.getOrderSmall().getItemstar() == 0) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }).collect(Collectors.toList());
+        newVos = newVos.subList((page - 1) * size, page * size > newVos.size() ? newVos.size() : page * size);
+        itemCommentReplyVo.setCommentReplyVos(newVos);
+        itemCommentReplyVo.setTotalElements(Long.parseLong(vos.size() + ""));
+        itemCommentReplyVo.setTotalPages(vos.size() % size == 0 ? vos.size() / size : vos.size() / size + 1);
+        return itemCommentReplyVo;
     }
 
     public static ItemCommentVo sortCommentSum(List<CommentSumVo> vos, CommentVo commentVo) {
