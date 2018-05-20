@@ -13,69 +13,73 @@ import java.sql.Timestamp;
 
 public class RecordCommentReply implements java.io.Serializable {
 
-	// Fields
+    // Fields
 
-	private Long id;
-	private Long assistantid;
-	private Long text;
-	private Timestamp createdate;
+    private Long id;
+    private Long assistantid;
+    private String text;
+    private Timestamp createdate;
 
-	// Constructors
+    // Constructors
 
-	/** default constructor */
-	public RecordCommentReply() {
-	}
+    /**
+     * default constructor
+     */
+    public RecordCommentReply() {
+    }
 
-	/** full constructor */
-	public RecordCommentReply(Long assistantid, Long text, Timestamp createdate) {
-		this.assistantid = assistantid;
-		this.text = text;
-		this.createdate = createdate;
-	}
+    /**
+     * full constructor
+     */
+    public RecordCommentReply(Long assistantid, String text, Timestamp createdate) {
+        this.assistantid = assistantid;
+        this.text = text;
+        this.createdate = createdate;
+    }
 
-	// Property accessors
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
+    // Property accessors
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @Id
+    @GeneratedValue(generator = "generator", strategy = GenerationType.IDENTITY)
 
-	@Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
 
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return this.id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Column(name = "assistantid")
+    @Column(name = "assistantid")
 
-	public Long getAssistantid() {
-		return this.assistantid;
-	}
+    public Long getAssistantid() {
+        return this.assistantid;
+    }
 
-	public void setAssistantid(Long assistantid) {
-		this.assistantid = assistantid;
-	}
+    public void setAssistantid(Long assistantid) {
+        this.assistantid = assistantid;
+    }
 
-	@Column(name = "text")
+    @Column(name = "text")
 
-	public Long getText() {
-		return this.text;
-	}
+    public String getText() {
+        return this.text;
+    }
 
-	public void setText(Long text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	@Column(name = "createdate", length = 19)
+    @Column(name = "createdate", length = 19)
 
-	public Timestamp getCreatedate() {
-		return this.createdate;
-	}
+    public Timestamp getCreatedate() {
+        return this.createdate;
+    }
 
-	public void setCreatedate(Timestamp createdate) {
-		this.createdate = createdate;
-	}
+    public void setCreatedate(Timestamp createdate) {
+        this.createdate = createdate;
+    }
 
 }

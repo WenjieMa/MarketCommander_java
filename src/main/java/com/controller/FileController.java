@@ -8,6 +8,7 @@ import com.service.OperatorService;
 import com.service.UserService;
 import com.utils.common.CommonUtils;
 import com.utils.common.ImageUtil;
+import com.utils.config.SystemInfo;
 import com.vo.ImageVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class FileController {
         file_name = ImageUtil.saveImg(multipartFile, filePath);
         ImageVo imageVo = new ImageVo();
         imageVo.setSuccess(true);
-        imageVo.setUrl(return_path + File.separator + file_name);
+        imageVo.setUrl(SystemInfo.staticLocation + return_path + File.separator + file_name);
 
         if (StringUtils.isNotBlank(file_name)) {
             return CommonUtils.toValue(imageVo, true, "0");
@@ -69,7 +70,7 @@ public class FileController {
         String root_fileName = multipartFile.getOriginalFilename();
         System.out.println("上传图片:name=" + root_fileName + ",type=" + contentType);
 
-        InfoItem infoItem =itemService.findById(itemid);
+        InfoItem infoItem = itemService.findById(itemid);
         //获取路径
         String return_path = ImageUtil.getFilePath(infoItem);
         String filePath = location + return_path;
@@ -78,7 +79,7 @@ public class FileController {
         file_name = ImageUtil.saveImg(multipartFile, filePath);
         ImageVo imageVo = new ImageVo();
         imageVo.setSuccess(true);
-        imageVo.setUrl(return_path + File.separator + file_name);
+        imageVo.setUrl(SystemInfo.staticLocation + return_path + File.separator + file_name);
 
         if (StringUtils.isNotBlank(file_name)) {
             return CommonUtils.toValue(imageVo, true, "0");
@@ -102,7 +103,7 @@ public class FileController {
         file_name = ImageUtil.saveImg(multipartFile, filePath);
         ImageVo imageVo = new ImageVo();
         imageVo.setSuccess(true);
-        imageVo.setUrl(return_path + File.separator + file_name);
+        imageVo.setUrl(SystemInfo.staticLocation + return_path + File.separator + file_name);
 
         if (StringUtils.isNotBlank(file_name)) {
             return CommonUtils.toValue(imageVo, true, "0");

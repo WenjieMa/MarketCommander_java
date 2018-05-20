@@ -60,22 +60,18 @@ public class ItemService {
     public Page<RecordImport> findImportByName(ImportVo importVo) {
         return iRecordImportDAO.findAll(new Specification<RecordImport>() {
 
-            int page = importVo.getPage();
-            int size = importVo.getSize();
             int id = importVo.getId();
-            String name = importVo.getName();
             Date start = importVo.getStart();
             Date end = importVo.getEnd();
 
             public Predicate toPredicate(Root<RecordImport> root,
                                          CriteriaQuery<?> query, CriteriaBuilder cb) {
-                Path<Date> startPath = root.get("start");
+                Path<Date> startPath = root.get("createdate");
                 Path<Long> idPath = root.get("id");
-                Path<Long> namePath = root.get("name");
-                Path<Date> endPath = root.get("end");
+                Path<Date> endPath = root.get("createdate");
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != name) {
-                    predicates.add(cb.equal(namePath, name));
+                if (id > 0) {
+                    predicates.add(cb.equal(idPath, id));
                 }
                 if (null != start) {
                     predicates.add(cb.greaterThan(startPath, start));

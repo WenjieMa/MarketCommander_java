@@ -16,18 +16,14 @@ public class OrderSum implements java.io.Serializable {
     // Fields
 
     private Long id;
-    private String name;
     private Long userid;
     private String type;
     private Double totalprice;
     private String address;
+    private String phone;
     private Long deliveryid;
-    private Long servicestar;
-    private Long deliverystar;
-    private Long couponid;
-    private Boolean issended;
-    private Boolean isreceived;
-    private Boolean isdiscard;
+    private Long count;
+    private Long state;
     private Timestamp createdate;
 
     // Constructors
@@ -48,29 +44,24 @@ public class OrderSum implements java.io.Serializable {
     /**
      * full constructor
      */
-    public OrderSum(String name, Long userid, String type, Double totalprice,
-                    String address, Long deliveryid, Long servicestar,
-                    Long deliverystar, Long couponid, Boolean issended, Boolean isreceived,
-                    Boolean isdiscard, Timestamp createdate) {
-        this.name = name;
+    public OrderSum(Long userid, String type, Double totalprice,
+                    String address, Long deliveryid,
+                    Long count, Long state, Timestamp createdate, String phone) {
         this.userid = userid;
         this.type = type;
         this.totalprice = totalprice;
         this.address = address;
         this.deliveryid = deliveryid;
-        this.servicestar = servicestar;
-        this.deliverystar = deliverystar;
-        this.couponid = couponid;
-        this.issended = issended;
-        this.isreceived = isreceived;
-        this.isdiscard = isdiscard;
+        this.count = count;
+        this.state = state;
         this.createdate = createdate;
+        this.phone = phone;
     }
 
     // Property accessors
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "generator",strategy = GenerationType.IDENTITY)
 
     @Column(name = "id", unique = true, nullable = false)
 
@@ -80,16 +71,6 @@ public class OrderSum implements java.io.Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Column(name = "name")
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Column(name = "userid", nullable = false)
@@ -122,6 +103,15 @@ public class OrderSum implements java.io.Serializable {
         this.totalprice = totalprice;
     }
 
+    @Column(name = "phone")
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
     @Column(name = "address")
 
     public String getAddress() {
@@ -142,64 +132,25 @@ public class OrderSum implements java.io.Serializable {
         this.deliveryid = deliveryid;
     }
 
-    @Column(name = "servicestar")
+    @Column(name = "count")
 
-    public Long getServicestar() {
-        return this.servicestar;
+    public Long getCount() {
+        return this.count;
     }
 
-    public void setServicestar(Long servicestar) {
-        this.servicestar = servicestar;
+    public void setCount(Long count) {
+
+        this.count = count;
     }
 
-    @Column(name = "deliverystar")
+    @Column(name = "state")
 
-    public Long getDeliverystar() {
-        return this.deliverystar;
+    public Long getState() {
+        return this.state;
     }
 
-    public void setDeliverystar(Long deliverystar) {
-        this.deliverystar = deliverystar;
-    }
-
-    @Column(name = "couponid")
-
-    public Long getCouponid() {
-        return this.couponid;
-    }
-
-    public void setCouponid(Long couponid) {
-        this.couponid = couponid;
-    }
-
-    @Column(name = "issended")
-
-    public Boolean getIssended() {
-        return this.issended;
-    }
-
-    public void setIssended(Boolean issended) {
-        this.issended = issended;
-    }
-
-    @Column(name = "isreceived")
-
-    public Boolean getIsreceived() {
-        return this.isreceived;
-    }
-
-    public void setIsreceived(Boolean isreceived) {
-        this.isreceived = isreceived;
-    }
-
-    @Column(name = "isdiscard")
-
-    public Boolean getIsdiscard() {
-        return this.isdiscard;
-    }
-
-    public void setIsdiscard(Boolean isdiscard) {
-        this.isdiscard = isdiscard;
+    public void setState(Long state) {
+        this.state = state;
     }
 
     @Column(name = "createdate", length = 19)

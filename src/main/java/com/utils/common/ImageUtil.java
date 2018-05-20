@@ -34,11 +34,11 @@ public class ImageUtil {
     }
 
     public static String getFilePath(InfoUser infoUser) {
-        return "/headpic/id" + infoUser.getId() + "/";
+        return "\\headpic\\id" + infoUser.getId();
     }
 
     public static String getFilePath(InfoItem infoItem) {
-        return "/goods/id" + infoItem.getId() + "/";
+        return "\\goods\\id" + infoItem.getId();
     }
 
 

@@ -19,7 +19,7 @@ public class OrderSmall implements java.io.Serializable {
 	private Long sumid;
 	private Long itemid;
 	private Long quantity;
-	private Long itemstar;
+	private Double itemstar;
 	private Long commentid;
 	private Long addcommentid;
 	private Timestamp createdate;
@@ -37,7 +37,7 @@ public class OrderSmall implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public OrderSmall(Long sumid, Long itemid, Long quantity, Long itemstar, Long commentid,
+	public OrderSmall(Long sumid, Long itemid, Long quantity, Double itemstar, Long commentid,
 			Long addcommentid, Timestamp createdate) {
 		this.sumid = sumid;
 		this.itemid = itemid;
@@ -95,11 +95,11 @@ public class OrderSmall implements java.io.Serializable {
 
 	@Column(name = "itemstar")
 
-	public Long getItemstar() {
+	public Double getItemstar() {
 		return this.itemstar;
 	}
 
-	public void setItemstar(Long itemstar) {
+	public void setItemstar(Double itemstar) {
 		this.itemstar = itemstar;
 	}
 

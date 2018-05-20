@@ -27,9 +27,7 @@ public class InfoItem implements java.io.Serializable {
 	private String textbig;
 	private String textsmall;
 	private String description;
-	private String picbig;
-	private String picsmall;
-	private String picshow;
+	private String itempic;
 	private Timestamp createdate;
 	private Timestamp updatedate;
 
@@ -46,8 +44,8 @@ public class InfoItem implements java.io.Serializable {
 
 	/** full constructor */
 	public InfoItem(Long typeid, String name, Double price, Boolean iseffective, Long likes,Long store, Boolean isoff,
-			Float discount, String textbig, String textsmall, String description, String picbig, String picsmall,
-			String picshow, Timestamp createdate, Timestamp updatedate) {
+			Float discount, String textbig, String textsmall, String description,
+			String itempic, Timestamp createdate, Timestamp updatedate) {
 		this.typeid = typeid;
 		this.name = name;
 		this.price = price;
@@ -59,9 +57,7 @@ public class InfoItem implements java.io.Serializable {
 		this.textbig = textbig;
 		this.textsmall = textsmall;
 		this.description = description;
-		this.picbig = picbig;
-		this.picsmall = picsmall;
-		this.picshow = picshow;
+		this.itempic = itempic;
 		this.createdate = createdate;
 		this.updatedate = updatedate;
 	}
@@ -171,6 +167,16 @@ public class InfoItem implements java.io.Serializable {
 		this.textbig = textbig;
 	}
 
+	@Column(name = "itempic")
+
+	public String getItempic() {
+		return this.itempic;
+	}
+
+	public void setItempic(String itempic) {
+		this.itempic = itempic;
+	}
+
 	@Column(name = "textsmall")
 
 	public String getTextsmall() {
@@ -189,36 +195,6 @@ public class InfoItem implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Column(name = "picbig")
-
-	public String getPicbig() {
-		return this.picbig;
-	}
-
-	public void setPicbig(String picbig) {
-		this.picbig = picbig;
-	}
-
-	@Column(name = "picsmall")
-
-	public String getPicsmall() {
-		return this.picsmall;
-	}
-
-	public void setPicsmall(String picsmall) {
-		this.picsmall = picsmall;
-	}
-
-	@Column(name = "picshow")
-
-	public String getPicshow() {
-		return this.picshow;
-	}
-
-	public void setPicshow(String picshow) {
-		this.picshow = picshow;
 	}
 
 	@Column(name = "createdate", nullable = false, length = 19)

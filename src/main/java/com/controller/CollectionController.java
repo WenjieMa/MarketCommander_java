@@ -1,11 +1,13 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.pojo.InfoItem;
 import com.pojo.RecordCollection;
 import com.pojo.RecordCollection;
 import com.service.CollectionService;
 import com.service.ItemTypeService;
 import com.utils.common.CommonUtils;
+import com.vo.CollectionVo;
 import com.vo.ItemTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,29 +54,29 @@ public class CollectionController {
 
     @ResponseBody
     @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody RecordCollection recordCollection) {
-        List<RecordCollection> recordCollections = null;
+    public JSON delete(@RequestBody CollectionVo collectionVo) {
+        Page<InfoItem> infoItemPage = null;
         try {
-            collectionService.delete(recordCollection.getUserid(),recordCollection.getItemid());
-            recordCollections = collectionService.findAll(recordCollection.getUserid());
+            collectionService.delete(collectionVo.getRecordCollection().getUserid(),collectionVo.getRecordCollection().getItemid());
+            infoItemPage = collectionService.findAll(collectionVo);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
         }
-        return CommonUtils.toValue(recordCollections, true, "0");
+        return CommonUtils.toValue(infoItemPage.getContent(), infoItemPage.getTotalPages(), infoItemPage.getTotalElements(), true, "0");
     }
 
     @ResponseBody
     @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody RecordCollection recordCollection) {
-        List<RecordCollection> recordCollectionPage = null;
+    public JSON findAll(@RequestBody CollectionVo collectionVo) {
+        Page<InfoItem> infoItemPage = null;
         try {
-            recordCollectionPage = collectionService.findAll(recordCollection.getUserid());
+            infoItemPage = collectionService.findAll(collectionVo);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
         }
-        return CommonUtils.toValue(recordCollectionPage, true, "0");
+        return CommonUtils.toValue(infoItemPage.getContent(), infoItemPage.getTotalPages(), infoItemPage.getTotalElements(), true, "0");
     }
 
 }

@@ -2,6 +2,8 @@ server:
   port: 8080
   context: /
 spring:
+  resources:
+    static-locations: file:${img.location}
   profiles:
     active: dev
   mvc:
@@ -24,3 +26,6 @@ spring:
     properties:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+img:
+  location: E:\Workspaces\img
+

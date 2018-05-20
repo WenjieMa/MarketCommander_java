@@ -40,7 +40,7 @@ public class RecordComment implements java.io.Serializable {
 	// Property accessors
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
-	@GeneratedValue(generator = "generator")
+	@GeneratedValue(generator = "generator",strategy = GenerationType.IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
 
