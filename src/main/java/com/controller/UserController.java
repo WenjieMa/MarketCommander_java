@@ -12,10 +12,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -28,7 +25,7 @@ public class UserController {
     private UserService userService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(method = RequestMethod.POST)
     public JSON insert(@RequestBody InfoUser infoUser) {
         infoUser.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -41,7 +38,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public JSON update(@RequestBody InfoUser infoUser) {
         try {
             userService.update(infoUser);
@@ -53,7 +50,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateforget")
+    @RequestMapping(value = "/updateforget", method = RequestMethod.PUT)
     public JSON updateForget(@RequestBody UsernameVo usernameVo) {
         try {
             usernameVo.setPassword(DigestUtils.md5Hex(usernameVo.getPassword().getBytes("UTF-8")));
@@ -66,8 +63,8 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody Long id) {
+    @RequestMapping(method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
             userService.delete(id);
         } catch (Exception e) {
@@ -78,8 +75,11 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody PageVo pageVo) {
+    @RequestMapping(method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         Page<InfoUser> infoUserPage = null;
         try {
             infoUserPage = userService.findAll(pageVo);
@@ -91,8 +91,14 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyname")
-    public JSON findByName(@RequestBody UserVo userVo) {
+    @RequestMapping(value = "/findbyname", method = RequestMethod.GET)
+    public JSON findByName(@RequestParam String nickname, @RequestParam String phone, @RequestParam Long id, @RequestParam int page, @RequestParam int size) {
+        UserVo userVo = new UserVo();
+        userVo.setSize(size);
+        userVo.setPage(page);
+        userVo.setId(id);
+        userVo.setNickname(nickname);
+        userVo.setPhone(phone);
         Page<InfoUser> infoUserPage = null;
         try {
             infoUserPage = userService.findByName(userVo);
@@ -104,8 +110,11 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyusernameandphone")
-    public JSON findByUsernameAndPhone(@RequestBody InfoUser infoUser) {
+    @RequestMapping(value = "/findbyusernameandphone", method = RequestMethod.GET)
+    public JSON findByUsernameAndPhone(@RequestParam String username, @RequestParam String phone) {
+        InfoUser infoUser = new InfoUser();
+        infoUser.setUsername(username);
+        infoUser.setPhone(phone);
         List<InfoUser> infoUsers = null;
         InfoUser infoUserUsed = null;
         try {

@@ -12,10 +12,7 @@ import com.vo.ItemTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -28,7 +25,7 @@ public class CollectionController {
     private CollectionService collectionService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/obj", method = RequestMethod.POST)
     public JSON insert(@RequestBody RecordCollection recordCollection) {
         recordCollection.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -41,15 +38,14 @@ public class CollectionController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyuseridanditemid")
-    public JSON find(@RequestBody RecordCollection recordCollection) {
+    @RequestMapping(value = "/obj/findbyuseridanditemid", method = RequestMethod.GET)
+    public JSON find(@RequestParam Long itemid, @RequestParam Long userid) {
         RecordCollection record = null;
         try {
-            record = collectionService.findByUserIdAndItemId(recordCollection);
+            record = collectionService.findByUserIdAndItemId(itemid, userid);
             if (record == null) {
                 return CommonUtils.toValue(null, true, "0");
             } else {
-                System.out.println(recordCollection.getId() + "这是我的收藏id");
                 return CommonUtils.toValue(record, true, "0");
             }
         } catch (Exception e) {
@@ -57,19 +53,6 @@ public class CollectionController {
             return CommonUtils.toValue(null, false, "404");
         }
 
-    }
-
-
-    @ResponseBody
-    @RequestMapping(value = "/update")
-    public JSON update(@RequestBody RecordCollection recordCollection) {
-        try {
-            collectionService.update(recordCollection);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return CommonUtils.toValue(null, false, "404");
-        }
-        return CommonUtils.toValue(null, true, "0");
     }
 
     @ResponseBody
@@ -87,10 +70,11 @@ public class CollectionController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/deletefromitem")
-    public JSON delete(@RequestBody RecordCollection recordCollection) {
+    @RequestMapping(value = "/obj", method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long itemid, @RequestParam Long userid) {
+        System.out.println("进来了");
         try {
-            collectionService.delete(recordCollection.getUserid(), recordCollection.getItemid());
+            collectionService.delete(userid, itemid);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -100,11 +84,11 @@ public class CollectionController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody CollectionVo collectionVo) {
+    @RequestMapping(value = "/obj", method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size, @RequestParam Long userid) {
         Page<InfoItem> infoItemPage = null;
         try {
-            infoItemPage = collectionService.findAll(collectionVo);
+            infoItemPage = collectionService.findAll(userid, page, size);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");

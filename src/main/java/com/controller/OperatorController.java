@@ -14,10 +14,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -30,7 +27,7 @@ public class OperatorController {
     private OperatorService operatorService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(method = RequestMethod.POST)
     public JSON insert(@RequestBody InfoOperator infoOperator) {
         infoOperator.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -43,7 +40,7 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public JSON update(@RequestBody InfoOperator infoOperator) {
         try {
             operatorService.update(infoOperator);
@@ -55,7 +52,7 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateforget")
+    @RequestMapping(value = "/updateforget", method = RequestMethod.PUT)
     public JSON updateForget(@RequestBody UsernameVo usernameVo) {
         try {
             usernameVo.setPassword(DigestUtils.md5Hex(usernameVo.getPassword().getBytes("UTF-8")));
@@ -68,8 +65,8 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody Long id) {
+    @RequestMapping(method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
             operatorService.delete(id);
         } catch (Exception e) {
@@ -80,8 +77,11 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody PageVo pageVo) {
+    @RequestMapping(method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
+        PageVo pageVo = new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         Page<InfoOperator> infoOperatorPage = null;
         try {
             infoOperatorPage = operatorService.findAll(pageVo);
@@ -93,8 +93,14 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyname")
-    public JSON findByName(@RequestBody OperatorVo operatorVo) {
+    @RequestMapping(value = "/findbyname", method = RequestMethod.GET)
+    public JSON findByName(@RequestParam String name, @RequestParam String phone, @RequestParam Long id, @RequestParam int page, @RequestParam int size) {
+        OperatorVo operatorVo = new OperatorVo();
+        operatorVo.setId(id);
+        operatorVo.setName(name);
+        operatorVo.setPage(page);
+        operatorVo.setSize(size);
+        operatorVo.setPhone(phone);
         Page<InfoOperator> infoOperatorPage = null;
         try {
             infoOperatorPage = operatorService.findByName(operatorVo);
@@ -106,12 +112,15 @@ public class OperatorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyusernameandphone")
-    public JSON findByUsernameAndPhone(@RequestBody InfoOperator infoOperator) {
+    @RequestMapping(value = "/findbyusernameandphone", method = RequestMethod.GET)
+    public JSON findByUsernameAndPhone(@RequestParam String username, @RequestParam String phone) {
         List<InfoOperator> infoOperators = null;
         InfoOperator infoOperatorUsed = null;
+        InfoOperator vo = new InfoOperator();
+        vo.setUsername(username);
+        vo.setPhone(phone);
         try {
-            infoOperators = operatorService.findByUsernameAndPhone(infoOperator);
+            infoOperators = operatorService.findByUsernameAndPhone(vo);
             if (infoOperators.size() > 0) {
                 infoOperatorUsed = infoOperators.get(0);
                 return CommonUtils.toValue(null, true, "0");

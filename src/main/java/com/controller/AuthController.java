@@ -35,15 +35,16 @@ public class AuthController {
     private RoleService roleService;
 
     @ResponseBody
-    @RequestMapping(value = "/operator/login")
-    public JSON operatorLogin(@RequestBody UsernameVo usernameVo) {
+    @RequestMapping(value = "/operator/basic", method = RequestMethod.GET)
+    public JSON operatorLogin(@RequestParam String username, @RequestParam String password) {
+        System.out.println(username);
         InfoOperator infoOperator = null;
         List<InfoOperator> infoOperators = null;
         OperatorLoginVo operatorLoginVo = new OperatorLoginVo();
         InfoRole infoRole = null;
         List<InfoRole> infoRoles = null;
         try {
-            infoOperators = operatorService.login(usernameVo.getUsername(), DigestUtils.md5Hex(usernameVo.getPassword().getBytes("UTF-8")));
+            infoOperators = operatorService.login(username, DigestUtils.md5Hex(password.getBytes("UTF-8")));
             if (infoOperators.size() > 0) {
                 infoRoles = roleService.findRole2Operator(infoOperators.get(0));
                 infoOperator = infoOperators.get(0);
@@ -60,7 +61,7 @@ public class AuthController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/operator/regist")
+    @RequestMapping(value = "/operator/basic", method = RequestMethod.POST)
     public JSON operatorRegist(@RequestBody InfoOperator infoOperator) {
         System.out.println("来了");
         try {
@@ -80,12 +81,12 @@ public class AuthController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/user/login")
-    public JSON userLogin(@RequestBody UsernameVo usernameVo) {
+    @RequestMapping(value = "/user/basic", method = RequestMethod.GET)
+    public JSON userLogin(@RequestParam String username, @RequestParam String password) {
         InfoUser infoUser = null;
         List<InfoUser> infoUsers = null;
         try {
-            infoUsers = userService.login(usernameVo.getUsername(), DigestUtils.md5Hex(usernameVo.getPassword().getBytes("UTF-8")));
+            infoUsers = userService.login(username, DigestUtils.md5Hex(password.getBytes("UTF-8")));
             if (infoUsers.size() > 0) {
                 infoUser = infoUsers.get(0);
                 return CommonUtils.toValue(infoUser, true, "0");
@@ -99,7 +100,7 @@ public class AuthController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/user/regist")
+    @RequestMapping(value = "/user/basic", method = RequestMethod.POST)
     public JSON userRegist(@RequestBody InfoUser infoUser) {
         System.out.println("来了");
         try {

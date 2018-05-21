@@ -4,6 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.vo.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +17,19 @@ import java.util.stream.Collectors;
  * Created by xiaoma on 2018/5/14.
  */
 public class CommonUtils {
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+    public static Timestamp timestamp = null;
+
+    public static Timestamp getTime(String time) {
+        System.out.println("时间" + time);
+        try {
+            timestamp = new Timestamp(dateFormat.parse(time).getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return timestamp;
+    }
+
     public static JSON toValue(Object object, boolean ok, String code) {
         JSONObject json = new JSONObject();
         if (object != null) {
@@ -27,11 +44,8 @@ public class CommonUtils {
         return json;
     }
 
-    public static ItemCommentReplyVo sortCommentReply(List<CommentReplyVo> vos, ItemVo itemVo) {
+    public static ItemCommentReplyVo sortCommentReply(List<CommentReplyVo> vos, int page, int size) {
         ItemCommentReplyVo itemCommentReplyVo = new ItemCommentReplyVo();
-        int page = itemVo.getPage();
-        int size = itemVo.getSize();
-
         List<CommentReplyVo> newVos = vos.stream().sorted((o1, o2) -> {
             if (o1.getOrderSmall().getItemstar() - o2.getOrderSmall().getItemstar() > 0) {
                 return 1;
@@ -48,10 +62,8 @@ public class CommonUtils {
         return itemCommentReplyVo;
     }
 
-    public static ItemCommentVo sortCommentSum(List<CommentSumVo> vos, CommentVo commentVo) {
+    public static ItemCommentVo sortCommentSum(List<CommentSumVo> vos, int page, int size) {
         ItemCommentVo itemCommentVo = new ItemCommentVo();
-        int page = commentVo.getPage();
-        int size = commentVo.getSize();
        /* Collections.sort(vos, new Comparator<CommentSumVo>() {
             @Override
             public int compare(CommentSumVo o1, CommentSumVo o2) {

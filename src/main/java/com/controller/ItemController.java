@@ -11,10 +11,7 @@ import com.vo.ItemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 
@@ -26,7 +23,7 @@ public class ItemController {
     private ItemService itemService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/obj", method = RequestMethod.POST)
     public JSON insert(@RequestBody InfoItem infoItem) {
         infoItem.setCreatedate(new Timestamp(System.currentTimeMillis()));
         infoItem.setIseffective(true);
@@ -41,7 +38,7 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/obj", method = RequestMethod.PUT)
     public JSON update(@RequestBody InfoItem infoItem) {
         try {
             itemService.update(infoItem);
@@ -65,9 +62,12 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody ItemVo itemVo) {
+    @RequestMapping(value = "/obj/all", method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
         System.out.println(1);
+        ItemVo itemVo = new ItemVo();
+        itemVo.setPage(page);
+        itemVo.setSize(size);
         Page<InfoItem> infoItemPage = null;
         try {
             infoItemPage = itemService.findAll(itemVo);
@@ -79,9 +79,15 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyname")
-    public JSON findByName(@RequestBody ItemVo itemVo) {
+    @RequestMapping(value = "/obj/allbyparams", method = RequestMethod.GET)
+    public JSON findByName(@RequestParam Long id, @RequestParam int page, @RequestParam int size, @RequestParam String name, @RequestParam Long typeid) {
         Page<InfoItem> infoItemPage = null;
+        ItemVo itemVo = new ItemVo();
+        itemVo.setPage(page);
+        itemVo.setSize(size);
+        itemVo.setTypeid(typeid);
+        itemVo.setName(name);
+        itemVo.setId(id);
         try {
             infoItemPage = itemService.findByName(itemVo);
         } catch (Exception e) {
@@ -92,11 +98,11 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/import/findall")
-    public JSON findAllImport(@RequestBody ImportVo importVo) {
+    @RequestMapping(value = "/import/all", method = RequestMethod.GET)
+    public JSON findAllImport(@RequestParam int page, @RequestParam int size) {
         Page<RecordImport> recordImportPage = null;
         try {
-            recordImportPage = itemService.findAllImport(importVo);
+            recordImportPage = itemService.findAllImport(page, size);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -105,9 +111,9 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/import/findbyname")
+    @RequestMapping(value = "/import/allbyname", method = RequestMethod.POST)
     public JSON findImportByName(@RequestBody ImportVo importVo) {
-        System.out.println("进来了"+importVo.getStart());
+        System.out.println("进来了" + importVo.getStart());
         Page<RecordImport> recordImportPage = null;
         try {
             recordImportPage = itemService.findImportByName(importVo);
@@ -119,7 +125,7 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/changeeff")
+    @RequestMapping(value = "/obj/changeeff", method = RequestMethod.PUT)
     public JSON changeEff(@RequestBody InfoItem itemVo) {
         try {
             itemVo.setIseffective(!itemVo.getIseffective());
@@ -132,7 +138,7 @@ public class ItemController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/import")
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public JSON importItem(@RequestBody ImportingVo importingVo) {
         importingVo.getRecordImport().setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {

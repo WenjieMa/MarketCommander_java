@@ -4,6 +4,7 @@ import com.dao.JPAInterface.IInfoItemTypeDAO;
 import com.dto.PageTools;
 import com.pojo.InfoItemType;
 import com.vo.ItemTypeVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,7 +49,7 @@ public class ItemTypeService {
                                          CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path<Long> typenamePath = root.get("typename");
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != typename) {
+                if (StringUtils.isNotEmpty(typename)) {
                     predicates.add(cb.equal(typenamePath, typename));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));

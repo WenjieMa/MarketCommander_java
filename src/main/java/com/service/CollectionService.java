@@ -34,8 +34,8 @@ public class CollectionService {
         infoItem.setLikes(infoItem.getLikes()+1);
     }
 
-    public RecordCollection findByUserIdAndItemId(RecordCollection recordCollection) {
-        List<RecordCollection> recordCollections = iRecordCollectionDAO.findByUseridAndItemid(recordCollection.getUserid(), recordCollection.getItemid());
+    public RecordCollection findByUserIdAndItemId(Long itemid,Long userid) {
+        List<RecordCollection> recordCollections = iRecordCollectionDAO.findByUseridAndItemid(userid, itemid);
         return recordCollections.size() == 0 ? null : recordCollections.get(0);
 
     }
@@ -61,6 +61,18 @@ public class CollectionService {
             ids.add(recordCollection.getItemid());
         }
         Page<InfoItem> infoItemPage = iInfoItemDAO.findAllByIdIn(ids, PageRequest.of(collectionVo.getPage()-1, collectionVo.getSize()));
+        System.out.println(infoItemPage.getContent().size() + "+++");
+        return infoItemPage;
+    }
+
+    public Page<InfoItem> findAll(Long userid, int page, int size) {
+
+        List<RecordCollection> recordCollections = iRecordCollectionDAO.findByUserid(userid);
+        ArrayList ids = new ArrayList<Long>();
+        for (RecordCollection recordCollection : recordCollections) {
+            ids.add(recordCollection.getItemid());
+        }
+        Page<InfoItem> infoItemPage = iInfoItemDAO.findAllByIdIn(ids, PageRequest.of(page - 1, size));
         System.out.println(infoItemPage.getContent().size() + "+++");
         return infoItemPage;
     }

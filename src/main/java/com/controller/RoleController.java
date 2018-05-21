@@ -12,10 +12,7 @@ import com.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -28,7 +25,7 @@ public class RoleController {
     private RoleService roleService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(method = RequestMethod.POST)
     public JSON insert(@RequestBody InfoRole infoRole) {
         infoRole.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -41,7 +38,7 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public JSON update(@RequestBody InfoRole infoRole) {
         try {
             roleService.update(infoRole);
@@ -53,8 +50,8 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody Long id) {
+    @RequestMapping(method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
             roleService.delete(id);
         } catch (Exception e) {
@@ -65,8 +62,11 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody PageVo pageVo) {
+    @RequestMapping(method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
+        PageVo pageVo=new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         System.out.println(1);
         Page<InfoRole> infoRoles = null;
         try {
@@ -79,7 +79,7 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/role2assistant/insert")
+    @RequestMapping(value = "/role2assistant",method = RequestMethod.POST)
     public JSON insertRole2Assistant(@RequestBody RecordAssistant2role recordAssistant2role) {
         recordAssistant2role.setCreatedate(new Timestamp(System.currentTimeMillis()));
         System.out.println("现在的roleid是" + recordAssistant2role.getRoleid() + "人员Id是" + recordAssistant2role.getAssistantid());
@@ -93,7 +93,7 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/role2assistant/update")
+    @RequestMapping(value = "/role2assistant",method = RequestMethod.PUT)
     public JSON updateRole2Assistant(@RequestBody RecordAssistant2role recordAssistant2role) {
         try {
             roleService.updateRole2Assistant(recordAssistant2role);
@@ -105,8 +105,11 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/role2assistant/delete")
-    public JSON deleteRole2Assistant(@RequestBody RecordAssistant2role recordAssistant2role) {
+    @RequestMapping(value = "/role2assistant",method = RequestMethod.DELETE)
+    public JSON deleteRole2Assistant(@RequestParam Long assistantid,@RequestParam Long roleid ) {
+        RecordAssistant2role recordAssistant2role=new RecordAssistant2role();
+        recordAssistant2role.setAssistantid(assistantid);
+        recordAssistant2role.setRoleid(roleid);
         try {
             roleService.deleteRole2Assistant(recordAssistant2role);
         } catch (Exception e) {
@@ -117,8 +120,12 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/role2assistant/findall")
-    public JSON findAllRole2Assistant(@RequestBody RoleVo roleVo) {
+    @RequestMapping(value = "/role2assistant",method = RequestMethod.GET)
+    public JSON findAllRole2Assistant(@RequestParam Long roleid,@RequestParam int page, @RequestParam int size ) {
+        RoleVo roleVo=new RoleVo();
+        roleVo.setPage(page);
+        roleVo.setSize(size);
+        roleVo.setRoleid(roleid);
         Page<InfoOperator> infoOperators = null;
         try {
             infoOperators = roleService.findAllRole2AssistantIn(roleVo);
@@ -130,8 +137,12 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/role2assistant/findallnone")
-    public JSON findAllRole2AssistantNone(@RequestBody RoleVo roleVo) {
+    @RequestMapping(value = "/role2assistant/findallnone",method = RequestMethod.GET)
+    public JSON findAllRole2AssistantNone(@RequestParam Long roleid,@RequestParam int page, @RequestParam int size ) {
+        RoleVo roleVo=new RoleVo();
+        roleVo.setPage(page);
+        roleVo.setSize(size);
+        roleVo.setRoleid(roleid);
         System.out.println("id为" + roleVo.getRoleid() + "的权限下没有的人的查询");
         Page<InfoOperator> infoOperators = null;
         try {

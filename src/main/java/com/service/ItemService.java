@@ -8,6 +8,7 @@ import com.pojo.RecordImport;
 import com.vo.ImportVo;
 import com.vo.ImportingVo;
 import com.vo.ItemVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,8 +54,8 @@ public class ItemService {
     }
 
 
-    public Page<RecordImport> findAllImport(ImportVo importVo) {
-        return iRecordImportDAO.findAll(PageTools.basicPage(importVo.getPage(), importVo.getSize()));
+    public Page<RecordImport> findAllImport(int page, int size) {
+        return iRecordImportDAO.findAll(PageTools.basicPage(page, size));
     }
 
     public Page<RecordImport> findImportByName(ImportVo importVo) {
@@ -106,14 +107,14 @@ public class ItemService {
                 Path<Long> idPath = root.get("id");
                 Path<Long> typeidPath = root.get("typeid");
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != name && "" != name) {
+                if (StringUtils.isNotEmpty(name)) {
                     predicates.add(cb.like(root.get("name").as(String.class), "%" + name + "%"));
                 }
-                if (null != typeid && typeid != 0) {
+                if (StringUtils.isNotEmpty(typeid + "") && typeid > 0) {
                     predicates.add(cb.equal(typeidPath, typeid));
                 }
 
-                if (null != id && id != 0) {
+                if (null != id && id > 0) {
                     predicates.add(cb.equal(idPath, id));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));

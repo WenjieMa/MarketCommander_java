@@ -7,6 +7,7 @@ import com.dto.PageTools;
 import com.pojo.*;
 import com.pojo.OrderSmall;
 import com.vo.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,16 +50,21 @@ public class OrderService {
         orderSum.setPhone(orderSumVo.getPhone());
         orderSum.setTotalprice(orderSumVo.getSumprice());
         orderSum.setType(orderSumVo.getType());
-
+        List<OrderSmallVo> orderSmallVos = orderSumVo.getOrderSmalls();
+        if (orderSmallVos.size() == 0) {
+            return false;
+        }
+        for (OrderSmallVo orderSmallVo : orderSmallVos) {
+            InfoItem infoItem = iInfoItemDAO.findById(orderSmallVo.getItemid()).get();
+            if (infoItem.getStore() - orderSmallVo.getQuantity() < 0) {
+                return false;
+            }
+        }
         Long orderSumId = iOrderSumDAO.save(orderSum).getId();
         for (OrderSmallVo orderSmallVo : orderSumVo.getOrderSmalls()) {
-            InfoItem infoItem= iInfoItemDAO.findById(orderSmallVo.getItemid()).get();
-            if(infoItem.getStore()-orderSmallVo.getQuantity()<0){
-                return false;
-            }else{
-                infoItem.setStore(infoItem.getStore()-orderSmallVo.getQuantity());
-                iInfoItemDAO.save(infoItem);
-            }
+            InfoItem infoItem = iInfoItemDAO.findById(orderSmallVo.getItemid()).get();
+            infoItem.setStore(infoItem.getStore() - orderSmallVo.getQuantity());
+            iInfoItemDAO.save(infoItem);
             OrderSmall orderSmall = new OrderSmall();
             orderSmall.setCreatedate(new Timestamp(System.currentTimeMillis()));
             orderSmall.setItemid(orderSmallVo.getData().getId());
@@ -127,13 +133,13 @@ public class OrderService {
             RecordCommentReply addRecordComment = null;
             if (orderSmall.getCommentid() != -1l) {
                 recordComment = iRecordCommentDAO.findById(orderSmall.getCommentid()).get();
-            }else{
-                recordComment=new RecordComment();
+            } else {
+                recordComment = new RecordComment();
                 recordComment.setComment("无");
             }
             if (orderSmall.getAddcommentid() != -1l) {
                 addRecordComment = iRecordCommentReplyDAO.findById(orderSmall.getAddcommentid()).get();
-            }else{
+            } else {
                 addRecordComment = new RecordCommentReply();
                 addRecordComment.setText("无");
             }
@@ -169,7 +175,7 @@ public class OrderService {
                 Path<Long> statePath = root.get("state");
 
                 List<Predicate> predicates = new ArrayList<Predicate>();
-                if (null != type) {
+                if (StringUtils.isNotEmpty(type)) {
                     predicates.add(cb.equal(typePath, type));
                 }
                 if (id > 0) {
@@ -225,18 +231,18 @@ public class OrderService {
             for (OrderSmall orderSmall : orderSmalls) {
                 OrderSmallVo orderSmallVo = new OrderSmallVo();
                 InfoItem infoItem = iInfoItemDAO.findById(orderSmall.getItemid()).get();
-                System.out.println(infoItem+"123");
+                System.out.println(infoItem + "123");
                 RecordComment recordComment = null;
                 RecordCommentReply addRecordComment = null;
                 if (orderSmall.getCommentid() != -1l) {
                     recordComment = iRecordCommentDAO.findById(orderSmall.getCommentid()).get();
-                }else{
-                    recordComment=new RecordComment();
+                } else {
+                    recordComment = new RecordComment();
                     recordComment.setComment("无");
                 }
                 if (orderSmall.getAddcommentid() != -1l) {
                     addRecordComment = iRecordCommentReplyDAO.findById(orderSmall.getAddcommentid()).get();
-                }else{
+                } else {
                     addRecordComment = new RecordCommentReply();
                     addRecordComment.setText("无");
                 }
@@ -273,13 +279,13 @@ public class OrderService {
             RecordCommentReply addRecordComment = null;
             if (orderSmall.getCommentid() != -1l) {
                 recordComment = iRecordCommentDAO.findById(orderSmall.getCommentid()).get();
-            }else{
-                recordComment=new RecordComment();
+            } else {
+                recordComment = new RecordComment();
                 recordComment.setComment("无");
             }
             if (orderSmall.getAddcommentid() != -1l) {
                 addRecordComment = iRecordCommentReplyDAO.findById(orderSmall.getAddcommentid()).get();
-            }else{
+            } else {
                 addRecordComment = new RecordCommentReply();
                 addRecordComment.setText("无");
             }

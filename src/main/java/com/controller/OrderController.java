@@ -11,10 +11,7 @@ import com.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,7 +24,7 @@ public class OrderController {
     private OrderService orderService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(method = RequestMethod.POST)
     public JSON insert(@RequestBody OrderSumVo orderSumVo) {
         System.out.println(orderSumVo.getUserid() + "这是用户id");
         orderSumVo.setCreatedate(new Timestamp(System.currentTimeMillis()));
@@ -46,7 +43,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/insertrefund")
+    @RequestMapping(value = "/insertrefund",method = RequestMethod.POST)
     public JSON insertRefund(@RequestBody OrderSumVo orderSumVo) {
         orderSumVo.setType("2");
         orderSumVo.setCreatedate(new Timestamp(System.currentTimeMillis()));
@@ -60,7 +57,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(method = RequestMethod.PUT)
     public JSON update(@RequestBody OrderSum orderSum) {
         try {
             orderService.update(orderSum);
@@ -72,7 +69,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updatestate")
+    @RequestMapping(value = "/updatestate",method = RequestMethod.PUT)
     public JSON updateState(@RequestBody OrderSumVo orderSumVo) {
         try {
             orderService.updateState(orderSumVo);
@@ -84,7 +81,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/senddelivery")
+    @RequestMapping(value = "/senddelivery",method = RequestMethod.PUT)
     public JSON sendDelivery(@RequestBody DeliveryVo deliveryVo) {
         OrderSumVo orderSumVo = null;
         try {
@@ -99,8 +96,8 @@ public class OrderController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody Long id) {
+    @RequestMapping(method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
             orderService.delete(id);
         } catch (Exception e) {
@@ -111,8 +108,8 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findordersmallbysumid")
-    public JSON findOrderSmallBySumid(@RequestBody Long sumid) {
+    @RequestMapping(value = "/findordersmallbysumid",method = RequestMethod.GET)
+    public JSON findOrderSmallBySumid(@RequestParam Long sumid) {
         List<OrderSmallVo> orderSmallVos = null;
         try {
             orderSmallVos = orderService.findOrderSmallVoBySumid(sumid);
@@ -125,7 +122,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findordersumbyparams")
+    @RequestMapping(value = "/findordersumbyparams",method = RequestMethod.POST)
     public JSON findOrderSumByParams(@RequestBody OrderSumSearchVo orderSumSearchVo) {
         Page<OrderSum> orderSumVoPage = null;
         try {
@@ -138,9 +135,13 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findordersumbyuserid")
-    public JSON findOrderSumVoByUserid(@RequestBody UserVo userVo) {
+    @RequestMapping(value = "/findordersumbyuserid",method = RequestMethod.GET)
+    public JSON findOrderSumVoByUserid(@RequestParam Long id,@RequestParam int page,@RequestParam int size) {
         OrderSumPageVo orderSumVoPage = null;
+        UserVo userVo=new UserVo();
+        userVo.setId(id);
+        userVo.setPage(page);
+        userVo.setSize(size);
         try {
             orderSumVoPage = orderService.findOrderSumVoByUserid(userVo);
         } catch (Exception e) {
@@ -151,12 +152,12 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findordersumbysumid")
-    public JSON findOrderSumVoBySumid(@RequestBody UserVo userVo) {
+    @RequestMapping(value = "/findordersumbysumid",method = RequestMethod.GET)
+    public JSON findOrderSumVoBySumid(@RequestParam Long id) {
         System.out.println("进来查询了");
         OrderSumVo orderSumVo = null;
         try {
-            orderSumVo = orderService.findOrderSumVoBySumid(userVo.getId());
+            orderSumVo = orderService.findOrderSumVoBySumid(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");

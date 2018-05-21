@@ -5,6 +5,7 @@ import com.pojo.InfoUser;
 import org.springframework.cglib.core.Constants;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sound.midi.Soundbank;
 import java.io.*;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class ImageUtil {
         }
         FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();
         String fileName = UUID.randomUUID() + ".png";
+        System.out.println("文件名" + fileName);
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path + File.separator + fileName));
         byte[] bs = new byte[1024];
         int len;
@@ -43,7 +45,7 @@ public class ImageUtil {
 
 
     public static String getFilePath(Long picid) {
-        return "\\homepage\\id" + picid ;
+        return "\\homepage\\id" + picid;
     }
 
     public static void deleteFile(String delpath) {

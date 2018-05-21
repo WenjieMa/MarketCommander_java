@@ -5,6 +5,7 @@ import com.pojo.InfoItemType;
 import com.service.ItemTypeService;
 import com.utils.common.CommonUtils;
 import com.vo.ItemTypeVo;
+import org.springframework.beans.factory.NamedBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class ItemTypeController {
     private ItemTypeService itemTypeService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/obj", method = RequestMethod.POST)
     public JSON insert(@RequestBody InfoItemType infoItemType) {
         infoItemType.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -34,7 +35,7 @@ public class ItemTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/obj", method = RequestMethod.PUT)
     public JSON update(@RequestBody InfoItemType infoItemType) {
         try {
             itemTypeService.update(infoItemType);
@@ -46,8 +47,8 @@ public class ItemTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete")
-    public JSON delete(@RequestBody Long id) {
+    @RequestMapping(value = "/obj", method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
             itemTypeService.delete(id);
         } catch (Exception e) {
@@ -58,9 +59,12 @@ public class ItemTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findall")
-    public JSON findAll(@RequestBody ItemTypeVo itemTypeVo) {
+    @RequestMapping(value = "/obj", method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
         Page<InfoItemType> infoItemTypePage = null;
+        ItemTypeVo itemTypeVo=new ItemTypeVo();
+        itemTypeVo.setPage(page);
+        itemTypeVo.setSize(size);
         try {
             infoItemTypePage = itemTypeService.findAll(itemTypeVo);
         } catch (Exception e) {
@@ -76,9 +80,13 @@ public class ItemTypeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findbyname")
-    public JSON findByName(@RequestBody ItemTypeVo itemTypeVo) {
+    @RequestMapping(value = "/obj/allbyname", method = RequestMethod.GET)
+    public JSON findByName(@RequestParam int page, @RequestParam int size,@RequestParam String typename) {
         Page<InfoItemType> infoItemTypePage = null;
+        ItemTypeVo itemTypeVo=new ItemTypeVo();
+        itemTypeVo.setPage(page);
+        itemTypeVo.setSize(size);
+        itemTypeVo.setTypename(typename);
         try {
             infoItemTypePage = itemTypeService.findByName(itemTypeVo);
         } catch (Exception e) {

@@ -8,6 +8,7 @@ import com.pojo.InfoUser;
 import com.vo.UserVo;
 import com.vo.PageVo;
 import com.vo.UsernameVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,10 +77,10 @@ public class UserService {
                 Path<Long> idPath = root.get("id");
                 List<Predicate> predicates = new ArrayList<Predicate>();
 
-                if (null != nickname) {
+                if (StringUtils.isNotEmpty(nickname)) {
                     predicates.add(cb.equal(nicknamePath, nickname));
                 }
-                if (null != phone) {
+                if (StringUtils.isNotEmpty(phone)) {
                     predicates.add(cb.equal(phonePath, phone));
                 }
                 if (id > 0) {

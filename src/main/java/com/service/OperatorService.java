@@ -8,6 +8,7 @@ import com.vo.ItemTypeVo;
 import com.vo.OperatorVo;
 import com.vo.PageVo;
 import com.vo.UsernameVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,13 +73,13 @@ public class OperatorService {
                 Path<Long> idPath = root.get("id");
                 List<Predicate> predicates = new ArrayList<Predicate>();
 
-                if (null != name) {
+                if (StringUtils.isNotEmpty(name)) {
                     predicates.add(cb.equal(namePath, name));
                 }
-                if (null != phone) {
+                if (StringUtils.isNotEmpty(phone)) {
                     predicates.add(cb.equal(phonePath, phone));
                 }
-                if (null != id) {
+                if (null != id && id > 0) {
                     predicates.add(cb.equal(idPath, id));
                 }
                 query.where(predicates.toArray(new Predicate[predicates.size()]));
@@ -89,7 +90,7 @@ public class OperatorService {
     }
 
     public List<InfoOperator> findByUsernameAndPhone(InfoOperator infoOperator) {
-        return iInfoOperatorDAO.findByUsernameAndPhone(infoOperator.getUsername(),infoOperator.getPhone());
+        return iInfoOperatorDAO.findByUsernameAndPhone(infoOperator.getUsername(), infoOperator.getPhone());
     }
 
 }

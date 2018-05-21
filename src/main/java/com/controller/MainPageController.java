@@ -12,10 +12,7 @@ import com.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -34,7 +31,7 @@ public class MainPageController {
     private AnounceService anounceService;
 
     @ResponseBody
-    @RequestMapping(value = "/hotsearch/insert")
+    @RequestMapping(value = "/hotsearch", method = RequestMethod.POST)
     public JSON insert(@RequestBody HomeHotsearch homeHotsearch) {
         homeHotsearch.setCreatedate(new Timestamp(System.currentTimeMillis()));
         homeHotsearch.setIseffective(true);
@@ -48,7 +45,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/hotsearch/update")
+    @RequestMapping(value = "/hotsearch", method = RequestMethod.PUT)
     public JSON update(@RequestBody HomeHotsearch HomeHotsearch) {
         try {
             homeHotSearchService.update(HomeHotsearch);
@@ -60,10 +57,10 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/hotsearch/delete")
-    public JSON delete(@RequestBody DeleteVo id) {
+    @RequestMapping(value = "/hotsearch", method = RequestMethod.DELETE)
+    public JSON delete(@RequestParam Long id) {
         try {
-            homeHotSearchService.delete(Long.parseLong(id.getId()));
+            homeHotSearchService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -72,9 +69,12 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/hotsearch/findall")
-    public JSON findAll(@RequestBody PageVo pageVo) {
+    @RequestMapping(value = "/hotsearch", method = RequestMethod.GET)
+    public JSON findAll(@RequestParam int page, @RequestParam int size) {
         Page<HomeHotsearch> HomeHotsearchPage = null;
+        PageVo pageVo=new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         try {
             HomeHotsearchPage = homeHotSearchService.findAll(pageVo);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class MainPageController {
         return CommonUtils.toValue(HomeHotsearchPage.getContent(), HomeHotsearchPage.getTotalPages(), HomeHotsearchPage.getTotalElements(), true, "0");
     }
     @ResponseBody
-    @RequestMapping(value = "/hotsearch/changeeff")
+    @RequestMapping(value = "/hotsearch/eff", method = RequestMethod.PUT)
     public JSON changeEff(@RequestBody HomeHotsearch homeHotsearch) {
         try {
             homeHotsearch.setIseffective(!homeHotsearch.getIseffective());
@@ -97,7 +97,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/1/insert")
+    @RequestMapping(value = "/start/1", method = RequestMethod.POST)
     public JSON insertStart(@RequestBody HomeColumnsLevel1 homeColumnsLevel1) {
         homeColumnsLevel1.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -110,7 +110,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/1/update")
+    @RequestMapping(value = "/start/1", method = RequestMethod.PUT)
     public JSON updateStart(@RequestBody HomeColumnsLevel1 homeColumnsLevel1) {
         try {
             startService.update(homeColumnsLevel1);
@@ -122,10 +122,10 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/1/delete")
-    public JSON deleteStart(@RequestBody DeleteVo id) {
+    @RequestMapping(value = "/start/1", method = RequestMethod.DELETE)
+    public JSON deleteStart(@RequestParam Long id) {
         try {
-            startService.delete(Long.parseLong(id.getId()));
+            startService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -134,9 +134,12 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/1/findall")
-    public JSON findAllStart(@RequestBody PageVo pageVo) {
+    @RequestMapping(value = "/start/1", method = RequestMethod.GET)
+    public JSON findAllStart(@RequestParam int page, @RequestParam int size) {
         Page<HomeColumnsLevel1> homeColumnsLevel1s = null;
+        PageVo pageVo=new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         try {
             homeColumnsLevel1s = startService.findAll(pageVo);
         } catch (Exception e) {
@@ -148,7 +151,7 @@ public class MainPageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/start/findallabove")
+    @RequestMapping(value = "/start/all", method = RequestMethod.GET)
     public JSON findAllAbove() {
         List<ColumnObjVo> columnObjVos = null;
         try {
@@ -162,7 +165,7 @@ public class MainPageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/start/2/insert")
+    @RequestMapping(value = "/start/2", method = RequestMethod.POST)
     public JSON insertStart2(@RequestBody HomeColumnsLevel2 homeColumnsLevel2) {
         homeColumnsLevel2.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -175,7 +178,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/2/update")
+    @RequestMapping(value = "/start/2", method = RequestMethod.PUT)
     public JSON updateStart2(@RequestBody HomeColumnsLevel2 homeColumnsLevel2) {
         try {
             startService.update2(homeColumnsLevel2);
@@ -187,10 +190,10 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/2/delete")
-    public JSON deleteStart2(@RequestBody DeleteVo id) {
+    @RequestMapping(value = "/start/2", method = RequestMethod.DELETE)
+    public JSON deleteStart2(@RequestParam Long id) {
         try {
-            startService.delete2(Long.parseLong(id.getId()));
+            startService.delete2(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -199,8 +202,12 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/start/2/findall")
-    public JSON findAllStart2(@RequestBody ColumnVo columnVo) {
+    @RequestMapping(value = "/start/2", method = RequestMethod.GET)
+    public JSON findAllStart2(@RequestParam int parentid,@RequestParam int page, @RequestParam int size) {
+        ColumnVo columnVo=new ColumnVo();
+        columnVo.setPage(page);
+        columnVo.setSize(size);
+        columnVo.setParentid(parentid);
         Page<HomeColumnsLevel2> homeColumnsLevel2s = null;
         try {
             homeColumnsLevel2s = startService.findAll2(columnVo);
@@ -213,7 +220,7 @@ public class MainPageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/anounce/insert")
+    @RequestMapping(value = "/anounce", method = RequestMethod.POST)
     public JSON insertAnounce(@RequestBody HomeAnnouncement homeAnnouncement) {
         homeAnnouncement.setCreatedate(new Timestamp(System.currentTimeMillis()));
         homeAnnouncement.setIseffective(true);
@@ -227,7 +234,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/anounce/update")
+    @RequestMapping(value = "/anounce", method = RequestMethod.PUT)
     public JSON updateAnounce(@RequestBody HomeAnnouncement homeAnnouncement) {
         try {
             anounceService.update(homeAnnouncement);
@@ -239,10 +246,10 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/anounce/delete")
-    public JSON deleteAnounce(@RequestBody DeleteVo id) {
+    @RequestMapping(value = "/anounce", method = RequestMethod.DELETE)
+    public JSON deleteAnounce(@RequestParam Long id) {
         try {
-            anounceService.delete(Long.parseLong(id.getId()));
+            anounceService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -251,8 +258,11 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/anounce/findall")
-    public JSON findAllAnounce(@RequestBody PageVo pageVo) {
+    @RequestMapping(value = "/anounce", method = RequestMethod.GET)
+    public JSON findAllAnounce(@RequestParam int page, @RequestParam int size) {
+        PageVo pageVo=new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         Page<HomeAnnouncement> homeAnnouncements = null;
         try {
             homeAnnouncements = anounceService.findAll(pageVo);
@@ -265,7 +275,7 @@ public class MainPageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/image/insert")
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
     public JSON insertImage(@RequestBody HomeStartimages homeStartimages) {
         homeStartimages.setCreatedate(new Timestamp(System.currentTimeMillis()));
         try {
@@ -278,7 +288,7 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/image/update")
+    @RequestMapping(value = "/image", method = RequestMethod.PUT)
     public JSON updateImage(@RequestBody HomeStartimages homeStartimages) {
         try {
             startService.updateImage(homeStartimages);
@@ -290,10 +300,10 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/image/delete")
-    public JSON deleteImage(@RequestBody DeleteVo id) {
+    @RequestMapping(value = "/image", method = RequestMethod.DELETE)
+    public JSON deleteImage(@RequestParam Long id) {
         try {
-            startService.deleteImage(Long.parseLong(id.getId()));
+            startService.deleteImage(id);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -302,8 +312,11 @@ public class MainPageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/image/findall")
-    public JSON findAllImage(@RequestBody PageVo pageVo) {
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
+    public JSON findAllImage(@RequestParam int page, @RequestParam int size) {
+        PageVo pageVo=new PageVo();
+        pageVo.setPage(page);
+        pageVo.setSize(size);
         Page<HomeStartimages> homeStartimages = null;
         try {
             homeStartimages = startService.findAllImage(pageVo);
@@ -316,7 +329,7 @@ public class MainPageController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/anounce/changeeff")
+    @RequestMapping(value = "/anounce/eff", method = RequestMethod.PUT)
     public JSON changeEffAnounce(@RequestBody HomeAnnouncement homeAnnouncement) {
         try {
             homeAnnouncement.setIseffective(!homeAnnouncement.getIseffective());

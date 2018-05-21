@@ -9,10 +9,7 @@ import com.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 
@@ -24,7 +21,7 @@ public class CommentController {
     private CommentService commentService;
 
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/obj", method = RequestMethod.POST)
     public JSON insert(@RequestBody OrderSumVo orderSumVo) {
         try {
             commentService.insert(orderSumVo);
@@ -36,7 +33,7 @@ public class CommentController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/reply")
+    @RequestMapping(value = "/obj/reply", method = RequestMethod.POST)
     public JSON reply(@RequestBody WholeComment wholeComment) {
         try {
             commentService.reply(wholeComment);
@@ -48,30 +45,30 @@ public class CommentController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/finditemcommentsum")
+    @RequestMapping(value = "/obj/finditemcommentsum", method = RequestMethod.POST)
     public JSON findItemCommentSum(@RequestBody CommentVo commentVo) {
-        ItemCommentVo itemCommentVo=new ItemCommentVo();
+        ItemCommentVo itemCommentVo = new ItemCommentVo();
         try {
-            itemCommentVo= commentService.findItemCommentSum(commentVo);
+            itemCommentVo = commentService.findItemCommentSum(commentVo.getId(), commentVo.getName(), commentVo.getStart(), commentVo.getEnd(), commentVo.getPage(), commentVo.getSize());
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
         }
-        return CommonUtils.toValue(itemCommentVo.getCommentSumVos(),itemCommentVo.getTotalPages(),itemCommentVo.getTotalElements(), true, "0");
+        return CommonUtils.toValue(itemCommentVo.getCommentSumVos(), itemCommentVo.getTotalPages(), itemCommentVo.getTotalElements(), true, "0");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/findcommentbyitemid")
-    public JSON findCommentVoByItemid(@RequestBody ItemVo itemVo) {
-        ItemCommentReplyVo itemCommentReplyVo=new ItemCommentReplyVo();
+    @RequestMapping(value = "/obj/findcommentbyitemid", method = RequestMethod.GET)
+    public JSON findCommentVoByItemid(@RequestParam Long id, @RequestParam int page, @RequestParam int size) {
+        ItemCommentReplyVo itemCommentReplyVo = new ItemCommentReplyVo();
         try {
-            itemCommentReplyVo= commentService.findCommentVoByItemid(itemVo);
+            itemCommentReplyVo = commentService.findCommentVoByItemid(id, page, size);
             System.out.println("总评价数" + itemCommentReplyVo.getCommentReplyVos().size());
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
         }
-        return CommonUtils.toValue(itemCommentReplyVo,itemCommentReplyVo.getTotalPages(),itemCommentReplyVo.getTotalElements(), true, "0");
+        return CommonUtils.toValue(itemCommentReplyVo, itemCommentReplyVo.getTotalPages(), itemCommentReplyVo.getTotalElements(), true, "0");
     }
 
 

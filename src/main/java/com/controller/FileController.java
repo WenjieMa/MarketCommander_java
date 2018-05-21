@@ -104,7 +104,7 @@ public class FileController {
         ImageVo imageVo = new ImageVo();
         imageVo.setSuccess(true);
         imageVo.setUrl(SystemInfo.staticLocation + return_path + File.separator + file_name);
-
+        System.out.println("图片src" + SystemInfo.staticLocation + return_path + File.separator + file_name);
         if (StringUtils.isNotBlank(file_name)) {
             return CommonUtils.toValue(imageVo, true, "0");
         } else {
