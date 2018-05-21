@@ -16,6 +16,8 @@ public interface IInfoOperatorDAO extends JpaRepository<InfoOperator, Long>, Jpa
 
     List<InfoOperator> findByUsername(String username);
 
+    Page<InfoOperator> findAllByIdNotIn(List<Long> ids, Pageable pageable);
+
     Page<InfoOperator> findAllByIdIn(List<Long> ids, Pageable pageable);
 
     @Query("select u from InfoOperator u where u.username = ?1 and u.password = ?2")

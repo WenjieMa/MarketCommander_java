@@ -29,8 +29,9 @@ public class CollectionService {
     IInfoItemDAO iInfoItemDAO;
 
     public void insert(RecordCollection recordCollection) {
-
         iRecordCollectionDAO.save(recordCollection);
+        InfoItem infoItem=iInfoItemDAO.findById(recordCollection.getItemid()).get();
+        infoItem.setLikes(infoItem.getLikes()+1);
     }
 
     public RecordCollection findByUserIdAndItemId(RecordCollection recordCollection) {
@@ -46,6 +47,8 @@ public class CollectionService {
 
     public int delete(Long userid, Long itemid) {
         int n = iRecordCollectionDAO.deleteByUseridAndItemid(userid, itemid);
+        InfoItem infoItem=iInfoItemDAO.findById(itemid).get();
+        infoItem.setLikes(infoItem.getLikes()-1);
         System.out.println("删除了" + userid + "的" + itemid + "条数" + n);
         return n;
     }

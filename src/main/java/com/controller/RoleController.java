@@ -82,6 +82,7 @@ public class RoleController {
     @RequestMapping(value = "/role2assistant/insert")
     public JSON insertRole2Assistant(@RequestBody RecordAssistant2role recordAssistant2role) {
         recordAssistant2role.setCreatedate(new Timestamp(System.currentTimeMillis()));
+        System.out.println("现在的roleid是" + recordAssistant2role.getRoleid() + "人员Id是" + recordAssistant2role.getAssistantid());
         try {
             roleService.insertRole2Assistant(recordAssistant2role);
         } catch (Exception e) {
@@ -118,10 +119,9 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "/role2assistant/findall")
     public JSON findAllRole2Assistant(@RequestBody RoleVo roleVo) {
-        System.out.println(1);
         Page<InfoOperator> infoOperators = null;
         try {
-            infoOperators = roleService.findAllRole2Assistant(roleVo);
+            infoOperators = roleService.findAllRole2AssistantIn(roleVo);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
@@ -132,10 +132,11 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "/role2assistant/findallnone")
     public JSON findAllRole2AssistantNone(@RequestBody RoleVo roleVo) {
-        System.out.println(1);
+        System.out.println("id为" + roleVo.getRoleid() + "的权限下没有的人的查询");
         Page<InfoOperator> infoOperators = null;
         try {
             infoOperators = roleService.findAllRole2AssistantNone(roleVo);
+            System.out.println("共有" + infoOperators.getContent().size() + "的人");
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");

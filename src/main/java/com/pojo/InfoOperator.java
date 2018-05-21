@@ -20,7 +20,7 @@ public class InfoOperator implements java.io.Serializable {
 	private String password;
 	private String name;
 	private String phone;
-	private Boolean gender;
+	private int gender;
 	private Timestamp createdate;
 	private Timestamp updatedate;
 
@@ -31,7 +31,7 @@ public class InfoOperator implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public InfoOperator(String username, String password, String name, String phone, Boolean gender,
+	public InfoOperator(String username, String password, String name, String phone, int gender,
 			Timestamp createdate, Timestamp updatedate) {
 		this.username = username;
 		this.password = password;
@@ -99,11 +99,11 @@ public class InfoOperator implements java.io.Serializable {
 
 	@Column(name = "gender")
 
-	public Boolean getGender() {
+	public int getGender() {
 		return this.gender;
 	}
 
-	public void setGender(Boolean gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 

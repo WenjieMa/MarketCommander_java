@@ -39,7 +39,7 @@ public class OrderService {
     IRecordCommentReplyDAO iRecordCommentReplyDAO;
 
 
-    public void insert(OrderSumVo orderSumVo) {
+    public boolean insert(OrderSumVo orderSumVo) {
         OrderSum orderSum = new OrderSum();
         orderSum.setAddress(orderSumVo.getAddress());
         orderSum.setCount(orderSumVo.getCount());
@@ -52,6 +52,13 @@ public class OrderService {
 
         Long orderSumId = iOrderSumDAO.save(orderSum).getId();
         for (OrderSmallVo orderSmallVo : orderSumVo.getOrderSmalls()) {
+            InfoItem infoItem= iInfoItemDAO.findById(orderSmallVo.getItemid()).get();
+            if(infoItem.getStore()-orderSmallVo.getQuantity()<0){
+                return false;
+            }else{
+                infoItem.setStore(infoItem.getStore()-orderSmallVo.getQuantity());
+                iInfoItemDAO.save(infoItem);
+            }
             OrderSmall orderSmall = new OrderSmall();
             orderSmall.setCreatedate(new Timestamp(System.currentTimeMillis()));
             orderSmall.setItemid(orderSmallVo.getData().getId());
@@ -62,6 +69,7 @@ public class OrderService {
             orderSmall.setAddcommentid(-1l);
             iOrderSmallDAO.save(orderSmall);
         }
+        return true;
     }
 
     public void update(OrderSum orderSum) {

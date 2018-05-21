@@ -76,33 +76,21 @@ public class RoleService {
         System.out.println("删除了" + n + "条");
     }
 
-    public Page<InfoOperator> findAllRole2Assistant(RoleVo roleVo) {
+    public Page<InfoOperator> findAllRole2AssistantNone(RoleVo roleVo) {
         List<RecordAssistant2role> recordAssistant2roles = iRecordAssistant2roleDAO.findByRoleid(roleVo.getRoleid());
         ArrayList ids = new ArrayList<Long>();
         for (RecordAssistant2role role : recordAssistant2roles) {
             ids.add(role.getAssistantid());
         }
-        if (ids.size() == 0) {
-            ids.add(-1l);
+
+        if(ids.size()==0){
+            return iInfoOperatorDAO.findAll(PageRequest.of(roleVo.getPage()-1,roleVo.getSize()));
         }
-        return iInfoOperatorDAO.findAll(new Specification<InfoOperator>() {
-            List<Long> idlist = ids;
-
-            public Predicate toPredicate(Root<InfoOperator> root,
-                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
-                Path<Long> idPath = root.get("id");
-                List<Predicate> predicates = new ArrayList<Predicate>();
-                for (Long id : idlist) {
-                    predicates.add(cb.or(cb.equal(idPath, id)));
-                }
-                query.where(predicates.toArray(new Predicate[predicates.size()]));
-                return null;
-            }
-        }, new PageRequest(roleVo.getPage() - 1, roleVo.getSize()));
-
+        System.out.println(ids.size()+"已经有的人的数量");
+        return iInfoOperatorDAO.findAllByIdNotIn(ids,PageRequest.of(roleVo.getPage()-1,roleVo.getSize()));
     }
 
-    public Page<InfoOperator> findAllRole2AssistantNone(RoleVo roleVo) {
+    public Page<InfoOperator> findAllRole2AssistantIn(RoleVo roleVo) {
         List<RecordAssistant2role> recordAssistant2roles = iRecordAssistant2roleDAO.findByRoleid(roleVo.getRoleid());
         ArrayList ids = new ArrayList<Long>();
         for (RecordAssistant2role role : recordAssistant2roles) {

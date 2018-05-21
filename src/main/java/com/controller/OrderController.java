@@ -31,13 +31,18 @@ public class OrderController {
     public JSON insert(@RequestBody OrderSumVo orderSumVo) {
         System.out.println(orderSumVo.getUserid() + "这是用户id");
         orderSumVo.setCreatedate(new Timestamp(System.currentTimeMillis()));
+        boolean b = false;
         try {
-            orderService.insert(orderSumVo);
+            b = orderService.insert(orderSumVo);
+            if (b) {
+                return CommonUtils.toValue(null, true, "0");
+            } else {
+                return CommonUtils.toValue(null, false, "404");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return CommonUtils.toValue(null, false, "404");
         }
-        return CommonUtils.toValue(null, true, "0");
     }
 
     @ResponseBody

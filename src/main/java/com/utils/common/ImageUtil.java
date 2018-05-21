@@ -43,7 +43,7 @@ public class ImageUtil {
 
 
     public static String getFilePath(Long picid) {
-        return "/homepage/id" + picid + "/";
+        return "\\homepage\\id" + picid ;
     }
 
     public static void deleteFile(String delpath) {
